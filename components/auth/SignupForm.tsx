@@ -1,18 +1,38 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { signupSchema, SignupSchema } from "@/lib/schemas/auth";
 import Link from "next/link";
+import { getPasswordStrength } from "@/lib/utils/password-strength";
+import { useEffect, useState } from "react";
+
+const strengthConfig = [
+  { label: "Very Weak", color: "bg-red-500" },
+  { label: "Weak", color: "bg-orange-500" },
+  { label: "Moderate", color: "bg-yellow-500" },
+  { label: "Strong", color: "bg-green-500" },
+  { label: "Very Strong", color: "bg-blue-500" },
+];
 
 export const SignupForm = () => {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
   });
+
+  const watchPassword = useWatch({
+    control,
+    name: "password",
+    defaultValue: "",
+  });
+
+  const strength = getPasswordStrength(watchPassword);
+  const { label, color } = strengthConfig[strength];
 
   const onSubmit = (data: SignupSchema) => {
     // TODO: integrar com react-query para enviar os dados de cadastro para o backend
@@ -21,7 +41,7 @@ export const SignupForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-4 border border-card-border rounded-2xl p-6 bg-card"
+      className="w-full flex flex-col gap-3 xl:gap-4 border border-card-border rounded-2xl p-4 xl:p-6 bg-card"
     >
       <div className="flex flex-col gap-1">
         <label
@@ -34,6 +54,11 @@ export const SignupForm = () => {
           {...register("username")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+        {errors.username && (
+          <span className="text-red-500 text-xs">
+            {errors.username.message}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -44,6 +69,9 @@ export const SignupForm = () => {
           {...register("name")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+        {errors.name && (
+          <span className="text-red-500 text-xs">{errors.name.message}</span>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -54,6 +82,9 @@ export const SignupForm = () => {
           {...register("email")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+        {errors.email && (
+          <span className="text-red-500 text-xs">{errors.email.message}</span>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -68,6 +99,27 @@ export const SignupForm = () => {
           type="password"
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+
+        <div className={`flex gap-1 ${watchPassword ? "mt-2" : "mt-0"}`}>
+          {watchPassword &&
+            [0, 1, 2, 3, 4].map((index) => (
+              <div
+                key={index}
+                className={`h-1 w-full rounded-full transition-colors duration-200 ${
+                  index <= strength ? color : "bg-card-border"
+                }`}
+              />
+            ))}
+        </div>
+        {watchPassword && (
+          <span className="text-xs text-zinc-400 mt-1">{label}</span>
+        )}
+
+        {errors.password && (
+          <span className="text-red-500 text-xs">
+            {errors.password.message}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -82,6 +134,11 @@ export const SignupForm = () => {
           type="password"
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+        {errors.confirmPassword && (
+          <span className="text-red-500 text-xs">
+            {errors.confirmPassword.message}
+          </span>
+        )}
       </div>
 
       <button
