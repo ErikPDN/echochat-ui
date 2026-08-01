@@ -31,9 +31,9 @@ export const LoginForm = () => {
           Username or Email
         </label>
         <input
-          {...register}
+          {...register("identifier")}
           placeholder="yourusername"
-          className="w-full border border-card-border rounded-xl p-3 bg-[#0D0D0D] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         {errors.identifier && (
           <span className="text-red-500 text-xs">
@@ -50,9 +50,9 @@ export const LoginForm = () => {
           Password
         </label>
         <input
-          {...register}
+          {...register("password")}
           type="password"
-          className="w-full justify-center border border-card-border rounded-xl p-3 bg-[#0D0D0D] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full justify-center border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         {errors.password && (
           <span className="text-red-500 text-xs">
