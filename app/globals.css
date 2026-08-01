@@ -6,6 +6,9 @@
   --accent: #f0504a;
   --card: #141414;
   --card-border: #262626;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-active: #4338ca;
 }
 
 @theme inline {
@@ -16,6 +19,9 @@
   --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
 }
 
 body {
