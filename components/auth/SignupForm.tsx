@@ -6,6 +6,7 @@ import { signupSchema, SignupSchema } from "@/lib/schemas/auth";
 import Link from "next/link";
 import { getPasswordStrength } from "@/lib/utils/password-strength";
 import { useEffect, useState } from "react";
+import { useSignupMutation } from "@/lib/hooks/useSignupMutation";
 
 const strengthConfig = [
   { label: "Very Weak", color: "bg-red-500" },
@@ -16,6 +17,7 @@ const strengthConfig = [
 ];
 
 export const SignupForm = () => {
+  const { mutate: signupUser, isPending, error } = useSignupMutation();
   const {
     handleSubmit,
     register,
@@ -35,7 +37,7 @@ export const SignupForm = () => {
   const { label, color } = strengthConfig[strength];
 
   const onSubmit = (data: SignupSchema) => {
-    // TODO: integrar com react-query para enviar os dados de cadastro para o backend
+    signupUser(data);
   };
 
   return (
@@ -143,7 +145,7 @@ export const SignupForm = () => {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="w-full bg-primary p-3 rounded-lg text-white font-semibold hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         Sign Up

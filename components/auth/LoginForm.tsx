@@ -4,8 +4,10 @@ import { loginSchema, LoginSchema } from "@/lib/schemas/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useLoginMutation } from "@/lib/hooks/useLoginMutation";
 
 export const LoginForm = () => {
+  const { mutate: loginUser, isPending, error } = useLoginMutation();
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    // TODO: integrar com react-query para enviar os dados de login para o backend
+    loginUser(data);
   };
 
   return (
@@ -72,7 +74,7 @@ export const LoginForm = () => {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="w-full bg-primary p-3 rounded-lg text-white font-semibold hover:bg-primary-hover active:bg-primary-active transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         Login
