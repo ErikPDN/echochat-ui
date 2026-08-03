@@ -11,7 +11,7 @@ export const useSignupMutation = () => {
     mutationFn: signup,
     onSuccess: (data) => {
       setSession(data.user, data.token);
-      router.push("/login");
+      router.push("/");
     },
   });
 };

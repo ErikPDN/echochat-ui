@@ -11,7 +11,7 @@ export const useLoginMutation = () => {
     mutationFn: login,
     onSuccess: (data) => {
       setSession(data.user, data.token);
-      router.push("/home");
+      router.push("/");
     },
   });
 };
