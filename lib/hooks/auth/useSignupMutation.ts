@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import { signup } from "../api/auth";
-import { useAuthStore } from "../store/auth-store";
+import { useRouter } from "next/navigation";
+import { signup } from "../../api/auth";
+import { useAuthStore } from "../../store/auth-store";
 
 export const useSignupMutation = () => {
   const router = useRouter();
@@ -10,7 +10,7 @@ export const useSignupMutation = () => {
   return useMutation({
     mutationFn: signup,
     onSuccess: (data) => {
-      setSession(data.user, data.token);
+      setSession(data.user, data.accessToken);
       router.push("/");
     },
   });

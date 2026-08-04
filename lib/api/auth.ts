@@ -1,32 +1,19 @@
 import { LoginSchema, SignupSchema } from "../schemas/auth";
 import { AuthResponse } from "../types/auth-reponse";
+import { httpClient } from "./http-client";
 
-async function handleResponse(res: Response): Promise<AuthResponse> {
-  const body = await res.json();
-  if (!res.ok) {
-    const err = body as AuthErrorBody;
-    throw new Error(Array.isArray(err.message) ? err.message[0] : err.message);
-  }
-  return body as AuthResponse;
-}
+export const login = async (data: LoginSchema) => {
+  const response = await httpClient.post<AuthResponse>("/auth/login", data);
+  return response.data;
+};
 
-export async function login(data: LoginSchema): Promise<AuthResponse> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
-  return handleResponse(res);
-}
-
-export async function signup(data: SignupSchema): Promise<AuthResponse> {
+export const signup = async (data: SignupSchema) => {
   const { confirmPassword, ...payload } = data;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const response = await httpClient.post<AuthResponse>("/auth/signup", payload);
+  return response.data;
+};
 
-  return handleResponse(res);
-}
+export const getMe = async (): Promise<AuthResponse["user"]> => {
+  const response = await httpClient.get<AuthResponse["user"]>("/auth/me");
+  return response.data;
+};

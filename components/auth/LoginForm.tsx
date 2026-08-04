@@ -4,14 +4,16 @@ import { loginSchema, LoginSchema } from "@/lib/schemas/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useLoginMutation } from "@/lib/hooks/useLoginMutation";
+import { useLoginMutation } from "@/lib/hooks/auth/useLoginMutation";
+import { getErrorMessage } from "@/lib/utils/get-error-message";
+import { CircleX } from "lucide-react";
 
 export const LoginForm = () => {
   const { mutate: loginUser, isPending, error } = useLoginMutation();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
@@ -71,6 +73,13 @@ export const LoginForm = () => {
           </Link>
         </div>
       </div>
+
+      {error && (
+        <div className="flex mt-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg gap-1.5">
+          <CircleX className="w-4 h-4 text-red-400" />
+          <span className="text-red-400 text-xs">{getErrorMessage(error)}</span>
+        </div>
+      )}
 
       <button
         type="submit"

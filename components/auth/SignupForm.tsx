@@ -6,7 +6,9 @@ import { signupSchema, SignupSchema } from "@/lib/schemas/auth";
 import Link from "next/link";
 import { getPasswordStrength } from "@/lib/utils/password-strength";
 import { useEffect, useState } from "react";
-import { useSignupMutation } from "@/lib/hooks/useSignupMutation";
+import { useSignupMutation } from "@/lib/hooks/auth/useSignupMutation";
+import { getErrorMessage } from "@/lib/utils/get-error-message";
+import { CircleX } from "lucide-react";
 
 const strengthConfig = [
   { label: "Very Weak", color: "bg-red-500" },
@@ -22,7 +24,7 @@ export const SignupForm = () => {
     handleSubmit,
     register,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
   });
@@ -142,6 +144,13 @@ export const SignupForm = () => {
           </span>
         )}
       </div>
+
+      {error && (
+        <div className="flex mt-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg gap-1.5">
+          <CircleX className="w-4 h-4 text-red-400" />
+          <span className="text-red-400 text-xs">{getErrorMessage(error)}</span>
+        </div>
+      )}
 
       <button
         type="submit"
