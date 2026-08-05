@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../../store/auth-store";
+import { useAuthStore } from "@/lib/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/api/auth";
 
