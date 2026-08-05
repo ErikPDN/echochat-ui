@@ -1,8 +1,15 @@
 import { isAxiosError } from "axios";
 
-export const getErrorMessage = (error: unknown) => {
+export const getErrorMessage = (error: unknown): string => {
   if (isAxiosError(error)) {
-    const message = error.response?.data?.message;
-    return Array.isArray(message) ? message[0] : message || error.message;
+    const status = error.response?.status;
+    const rawMessage = error.response?.data?.message;
+    const message = Array.isArray(rawMessage)
+      ? rawMessage[0]
+      : (rawMessage ?? error.message);
+
+    return status ? `${status} ${message}` : message;
   }
+
+  return "An unexpected error occurred. Please try again later.";
 };

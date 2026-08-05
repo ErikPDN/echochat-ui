@@ -7,7 +7,8 @@ import Link from "next/link";
 import { getPasswordStrength } from "@/lib/utils/password-strength";
 import { useSignupMutation } from "@/lib/hooks/auth/useSignupMutation";
 import { getErrorMessage } from "@/lib/utils/get-error-message";
-import { CircleX } from "lucide-react";
+import { CircleX, Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 const strengthConfig = [
   { label: "Very Weak", color: "bg-red-500" },
@@ -18,6 +19,7 @@ const strengthConfig = [
 ];
 
 export const SignupForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { mutate: signupUser, isPending, error } = useSignupMutation();
   const {
     handleSubmit,
@@ -132,11 +134,26 @@ export const SignupForm = () => {
         >
           Confirm Password
         </label>
-        <input
-          {...register("confirmPassword")}
-          type="password"
-          className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+        <div className="relative flex items-center">
+          <input
+            {...register("confirmPassword")}
+            type={showPassword ? "text" : "password"}
+            className="w-full text-sm border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-600 hover:text-zinc-500 focus:outline-none cursor-pointer"
+          >
+            {showPassword ? (
+              <EyeOff className="w-5 h-5" />
+            ) : (
+              <Eye className="w-5 h-5" />
+            )}
+          </button>
+        </div>
+
         {errors.confirmPassword && (
           <span className="text-red-500 text-xs">
             {errors.confirmPassword.message}
