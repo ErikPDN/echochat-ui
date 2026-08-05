@@ -25,7 +25,7 @@ export const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-4 border border-card-border rounded-2xl p-6 bg-card"
+      className="w-full flex flex-col gap-3 xl:gap-4 border border-card-border rounded-2xl p-4 xl:p-6 bg-card"
     >
       <div className="flex flex-col gap-1">
         <label
