@@ -6,6 +6,7 @@ interface AuthStore {
   user: User | null;
   accessToken: string | null;
   setSession: (user: User, accessToken: string) => void;
+  setAccessToken: (accessToken: string) => void;
   clearSession: () => void;
 }
 
@@ -14,13 +15,16 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       user: null,
       accessToken: null,
-      setSession: (user: User, accessToken: string) => {
+      setSession: (user, accessToken) => {
         set({ user, accessToken });
+      },
+      setAccessToken: (accessToken) => {
+        set({ accessToken });
       },
       clearSession: () => {
         set({ user: null, accessToken: null });
       },
     }),
-    { name: "auth-storage" },
+    { name: "auth-storage", partialize: (state) => ({ user: state.user }) }, // Persist only the user object, not the access token
   ),
 );

@@ -5,7 +5,6 @@ import { useForm, useWatch } from "react-hook-form";
 import { signupSchema, SignupSchema } from "@/lib/schemas/auth";
 import Link from "next/link";
 import { getPasswordStrength } from "@/lib/utils/password-strength";
-import { useEffect, useState } from "react";
 import { useSignupMutation } from "@/lib/hooks/auth/useSignupMutation";
 import { getErrorMessage } from "@/lib/utils/get-error-message";
 import { CircleX } from "lucide-react";
