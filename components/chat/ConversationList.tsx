@@ -1,13 +1,22 @@
 "use client";
 
+import { Conversation } from "@/lib/types/conversation";
 import { ConversationListItem } from "./ConversationListItem";
+import { ConversationListSkeleton } from "./ConversationListSkeleton";
 
 interface ConversationListProps {
-  conversations: any[];
+  conversations: Conversation[];
+  isLoading?: boolean;
 }
 
-// TODO: Add skeleton loading state for conversation list
-export const ConversationList = ({ conversations }: ConversationListProps) => {
+export const ConversationList = ({
+  conversations,
+  isLoading,
+}: ConversationListProps) => {
+  if (isLoading) {
+    return <ConversationListSkeleton />;
+  }
+
   return (
     <ul className="flex flex-col gap-2 p-4">
       {conversations.map((conversation) => (

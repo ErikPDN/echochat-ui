@@ -8,10 +8,11 @@ import { ConversationList } from "../chat/ConversationList";
 import { useAuthStore } from "@/lib/store/auth-store";
 import { ConfirmDialog } from "../ui/ConfirmDialog";
 import { useLogoutMutation } from "@/lib/hooks/auth/useLogoutMutation";
+import { Conversation } from "@/lib/types/conversation";
 
-const mockConversations = [
+const mockConversations: Conversation[] = [
   {
-    id: 1,
+    id: "1",
     name: "John Doe",
     lastMessage: "Hey, how are you?",
     time: "10:30 AM",
@@ -21,7 +22,7 @@ const mockConversations = [
     isActive: true,
   },
   {
-    id: 2,
+    id: "2",
     name: "Jane Smith",
     lastMessage: "Let's catch up later.",
     time: "9:15 AM",
@@ -31,7 +32,7 @@ const mockConversations = [
     isActive: false,
   },
   {
-    id: 3,
+    id: "3",
     name: "Alice Johnson",
     lastMessage: "Can you send me the report?",
     time: "Yesterday",
@@ -41,7 +42,7 @@ const mockConversations = [
     isActive: false,
   },
   {
-    id: 4,
+    id: "4",
     name: "Bob Brown",
     lastMessage: "Thanks for your help!",
     time: "2 days ago",
@@ -85,7 +86,7 @@ export const Sidebar = () => {
       <SearchBar />
 
       <div className="flex-1 overflow-y-auto">
-        <ConversationList conversations={mockConversations} />
+        <ConversationList conversations={mockConversations} isLoading={true} />
       </div>
 
       <div className="w-full border border-t border-card-border p-3 flex items-center justify-between">

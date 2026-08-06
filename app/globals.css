@@ -45,3 +45,23 @@ input:-webkit-autofill:focus {
     background-color 5000s ease-in-out 0s,
     color 5000s ease-in-out 0s;
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -700px 0;
+  }
+  100% {
+    background-position: 700px 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--card-border) 25%,
+    #ffffff30 37%,
+    var(--card-border) 63%
+  );
+  background-size: 1400px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
