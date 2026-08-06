@@ -17,7 +17,7 @@ export const GuestRoute = ({ children }: { children: ReactNode }) => {
 
   if (isHydrating) {
     <div className="flex items-center justify-center h-screen">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-muted border-t-primary" />
+      <div className="h-14 w-14 animate-spin rounded-full border-4 border-muted border-t-primary" />
     </div>;
   }
 
