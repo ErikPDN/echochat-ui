@@ -10,6 +10,8 @@
   --primary: #6366f1;
   --primary-hover: #4f46e5;
   --primary-active: #4338ca;
+  --muted: #1c1c20;
+  --muted-hover: #27272e;
 }
 
 @theme inline {
@@ -24,6 +26,7 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
+  --color-muted: var(--muted);
 }
 
 body {

@@ -5,8 +5,10 @@ import { persist } from "zustand/middleware";
 interface AuthStore {
   user: User | null;
   accessToken: string | null;
+  isHydrating: boolean;
   setSession: (user: User, accessToken: string) => void;
   setAccessToken: (accessToken: string) => void;
+  setIsHydrating: (isHydrating: boolean) => void;
   clearSession: () => void;
 }
 
@@ -15,6 +17,10 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       user: null,
       accessToken: null,
+      isHydrating: true,
+      setIsHydrating: (isHydrating) => {
+        set({ isHydrating });
+      },
       setSession: (user, accessToken) => {
         set({ user, accessToken });
       },
