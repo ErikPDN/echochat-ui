@@ -55,7 +55,7 @@ const mockConversations: Conversation[] = [
 
 export const Sidebar = () => {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
-  const { mutate: logout, isPending, error } = useLogoutMutation(); // TODO: criar um toast e exibir a mensagem de erro
+  const { mutate: logout, isPending } = useLogoutMutation();
 
   const user = useAuthStore((state) => state.user);
 
@@ -86,7 +86,7 @@ export const Sidebar = () => {
       <SearchBar />
 
       <div className="flex-1 overflow-y-auto">
-        <ConversationList conversations={mockConversations} isLoading={true} />
+        <ConversationList conversations={mockConversations} />
       </div>
 
       <div className="w-full border border-t border-card-border p-3 flex items-center justify-between">
