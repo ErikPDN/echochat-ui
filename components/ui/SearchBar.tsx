@@ -18,6 +18,7 @@ export const SearchBar = () => {
 
       <input
         type="text"
+        aria-label="Search"
         placeholder="Search"
         value={searchQuery}
         onChange={handleSearchChange}

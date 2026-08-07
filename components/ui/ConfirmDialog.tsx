@@ -1,3 +1,5 @@
+"use client";
+
 interface ConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;

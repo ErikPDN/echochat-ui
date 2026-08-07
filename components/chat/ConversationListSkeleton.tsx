@@ -1,3 +1,5 @@
+"use client";
+
 interface ConversationListSkeletonProps {
   count?: number;
 }

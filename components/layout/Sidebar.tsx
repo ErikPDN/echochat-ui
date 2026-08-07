@@ -103,7 +103,7 @@ export const Sidebar = () => {
         <button
           type="button"
           onClick={() => setIsLogoutDialogOpen(true)}
-          className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transitions-colors duration-300 cursor-pointer"
+          className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transition-colors duration-300 cursor-pointer"
         >
           <LogOut className="h-4 w-4" />
         </button>
