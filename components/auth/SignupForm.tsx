@@ -56,6 +56,7 @@ export const SignupForm = () => {
           Username
         </label>
         <input
+          id="username"
           {...register("username")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
@@ -71,6 +72,7 @@ export const SignupForm = () => {
           Name
         </label>
         <input
+          id="name"
           {...register("name")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
@@ -84,6 +86,7 @@ export const SignupForm = () => {
           Email
         </label>
         <input
+          id="email"
           {...register("email")}
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
@@ -100,6 +103,7 @@ export const SignupForm = () => {
           Password
         </label>
         <input
+          id="password"
           {...register("password")}
           type="password"
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -136,6 +140,7 @@ export const SignupForm = () => {
         </label>
         <div className="relative flex items-center">
           <input
+            id="confirmPassword"
             {...register("confirmPassword")}
             type={showPassword ? "text" : "password"}
             className="w-full text-sm border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"

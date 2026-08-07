@@ -10,6 +10,8 @@
   --primary: #6366f1;
   --primary-hover: #4f46e5;
   --primary-active: #4338ca;
+  --muted: #1c1c20;
+  --muted-hover: #27272e;
 }
 
 @theme inline {
@@ -24,6 +26,7 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
+  --color-muted: var(--muted);
 }
 
 body {
@@ -41,4 +44,24 @@ input:-webkit-autofill:focus {
   transition:
     background-color 5000s ease-in-out 0s,
     color 5000s ease-in-out 0s;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -700px 0;
+  }
+  100% {
+    background-position: 700px 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--card-border) 25%,
+    #ffffff30 37%,
+    var(--card-border) 63%
+  );
+  background-size: 1400px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
 }

@@ -35,6 +35,7 @@ export const LoginForm = () => {
           Username or Email
         </label>
         <input
+          id="identifier"
           {...register("identifier")}
           placeholder="yourusername"
           className="w-full border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -54,6 +55,7 @@ export const LoginForm = () => {
           Password
         </label>
         <input
+          id="password"
           {...register("password")}
           type="password"
           className="w-full justify-center border border-card-border rounded-xl p-3 bg-input-background focus:outline-none focus:ring-2 focus:ring-indigo-500"

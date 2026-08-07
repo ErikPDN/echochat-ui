@@ -1,5 +1,5 @@
-interface AuthErrorBody {
+export interface AuthErrorBody {
   message: string | string[];
-  error: string;
+  error?: string;
   statusCode: number;
 }

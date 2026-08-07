@@ -1,5 +1,5 @@
 import { LoginSchema, SignupSchema } from "../schemas/auth";
-import { AuthResponse } from "../types/auth-reponse";
+import { AuthResponse } from "../types/auth-response";
 import { httpClient, refreshAccessToken } from "./http-client";
 
 export { refreshAccessToken };
