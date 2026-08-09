@@ -4,8 +4,8 @@ import Image from "next/image";
 
 interface ConversationListItemProps {
   name: string;
-  lastMessage: string;
-  time: string;
+  lastMessage?: string;
+  time?: string;
   avatarColor: string;
   avatarUrl?: string;
   unreadCount?: number;
@@ -29,7 +29,9 @@ export const ConversationListItem = ({
       }`}
     >
       {avatarUrl ? (
-        <Image src={avatarUrl} alt={name} width={40} height={40} />
+        <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
+          <Image src={avatarUrl} alt={name} width={40} height={40} />
+        </div>
       ) : (
         <div
           className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold text-white shrink-0"

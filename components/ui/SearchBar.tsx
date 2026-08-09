@@ -3,7 +3,11 @@
 import { Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
-export const SearchBar = () => {
+interface SearchBarProps {
+  placeholder?: string;
+}
+
+export const SearchBar = ({ placeholder = "Search" }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +23,7 @@ export const SearchBar = () => {
       <input
         type="text"
         aria-label="Search"
-        placeholder="Search"
+        placeholder={placeholder}
         value={searchQuery}
         onChange={handleSearchChange}
         className="w-full py-2 px-4 pl-8 rounded-lg border border-card-border bg-zinc-800 text-sm outline-none"
