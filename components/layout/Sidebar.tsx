@@ -13,6 +13,7 @@ import { SidebarHeader } from "./SidebarHeader";
 import { SidebarFooter } from "./SidebarFooter";
 import { NewChatPanel } from "../chat/new-chat/NewChatPanel";
 import { motion, AnimatePresence } from "framer-motion";
+import { ConversationType } from "@/lib/types/conversation.response";
 
 export const Sidebar = () => {
   const [view, setView] = useState<"conversations" | "new-chat">(
@@ -39,6 +40,10 @@ export const Sidebar = () => {
       x: dir === "right" ? "-100%" : "100%",
     }),
   };
+
+  const privateConversations = (conversations || []).filter(
+    (conversation) => conversation.type === ConversationType.PRIVATE,
+  );
 
   return (
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
@@ -91,7 +96,7 @@ export const Sidebar = () => {
                 setDirection("left");
                 setView("conversations");
               }}
-              conversations={(conversations || []).map((conversation) =>
+              conversations={privateConversations.map((conversation) =>
                 mapConversationResponseToConversation(
                   conversation,
                   user?.id ?? "",

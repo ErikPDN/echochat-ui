@@ -17,7 +17,6 @@ interface NewChatPanelProps {
   isLoadingConversations?: boolean;
 }
 
-// TODO: botar uma animação de slide left-right quando o painel de nova conversa abrir e fechar
 export const NewChatPanel = ({
   onBackClick,
   conversations,
@@ -44,8 +43,8 @@ export const NewChatPanel = ({
       <SearchBar placeholder="Search for username or id" />
 
       <NewChatOptions
-        onCreateGroupConversation={createGroupConversation}
-        onCreatePrivateConversation={createPrivateConversation}
+        onCreateGroupConversation={() => {}}
+        onCreatePrivateConversation={() => {}}
       />
 
       <NewChatPrivateConversationList
