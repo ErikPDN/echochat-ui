@@ -21,6 +21,10 @@ export const mapConversationResponseToConversation = (
   return {
     id: dto.id,
     name,
-    avatarColor: stringToColor(otherMember?.userId ?? dto.id),
+    avatarColor: stringToColor(
+      dto.type === ConversationType.GROUP
+        ? dto.name || dto.id
+        : otherMember?.userId || "",
+    ),
   };
 };

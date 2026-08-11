@@ -21,7 +21,9 @@ export const createGroupConversation = async (
     "/conversations/group",
     responseData,
   );
-  return response.data;
+
+  const { id } = response.data;
+  return id;
 };
 
 export const createPrivateConversation = async (
@@ -32,7 +34,9 @@ export const createPrivateConversation = async (
     "/conversations/private",
     { memberId },
   );
-  return response.data;
+
+  const { id } = response.data;
+  return id;
 };
 
 export const addMemberToConversation = async (

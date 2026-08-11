@@ -5,13 +5,19 @@ import { ChangeEvent, useState } from "react";
 
 interface SearchBarProps {
   placeholder?: string;
+  onSearch?: (query: string) => void;
 }
 
-export const SearchBar = ({ placeholder = "Search" }: SearchBarProps) => {
+export const SearchBar = ({
+  placeholder = "Search",
+  onSearch,
+}: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
+    onSearch?.(value);
   };
 
   return (
