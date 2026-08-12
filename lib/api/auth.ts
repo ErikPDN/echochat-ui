@@ -23,3 +23,8 @@ export const getMe = async (): Promise<AuthResponse["user"]> => {
 export const logout = async () => {
   await httpClient.post("/auth/logout");
 };
+
+export const findByUsername = async (username: string) => {
+  const response = await httpClient.get(`/auth/users/username/${username}`);
+  return response.data;
+};

@@ -14,6 +14,7 @@ import { SidebarFooter } from "./SidebarFooter";
 import { NewChatPanel } from "../chat/new-chat/NewChatPanel";
 import { motion, AnimatePresence } from "framer-motion";
 import { ConversationType } from "@/lib/types/conversation.response";
+import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
 
 export const Sidebar = () => {
   const [view, setView] = useState<"conversations" | "new-chat">(
@@ -23,6 +24,11 @@ export const Sidebar = () => {
   const [direction, setDirection] = useState<"left" | "right">("right");
   const { mutate: logout, isPending } = useLogoutMutation();
   const { data: conversations, isLoading } = useGetConversationsQuery();
+  const { onSearch, filteredConversations } = useConversationSearch(
+    conversations?.map((conversation) =>
+      mapConversationResponseToConversation(conversation, user?.id ?? ""),
+    ) ?? [],
+  );
 
   const user = useAuthStore((state) => state.user);
 
@@ -41,9 +47,12 @@ export const Sidebar = () => {
     }),
   };
 
-  const privateConversations = (conversations || []).filter(
-    (conversation) => conversation.type === ConversationType.PRIVATE,
-  );
+  const privateConversations =
+    conversations
+      ?.filter((conversation) => conversation.type === ConversationType.PRIVATE)
+      .map((conversation) =>
+        mapConversationResponseToConversation(conversation, user?.id ?? ""),
+      ) ?? [];
 
   return (
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
@@ -65,14 +74,9 @@ export const Sidebar = () => {
                 setView("new-chat");
               }}
             />
-            <SearchBar />
+            <SearchBar onSearch={onSearch} />
             <ConversationList
-              conversations={(conversations || []).map((conversation) =>
-                mapConversationResponseToConversation(
-                  conversation,
-                  user?.id ?? "",
-                ),
-              )}
+              conversations={filteredConversations}
               isLoading={isLoading}
             />
             <SidebarFooter
@@ -96,12 +100,7 @@ export const Sidebar = () => {
                 setDirection("left");
                 setView("conversations");
               }}
-              conversations={privateConversations.map((conversation) =>
-                mapConversationResponseToConversation(
-                  conversation,
-                  user?.id ?? "",
-                ),
-              )}
+              conversations={privateConversations}
               isLoadingConversations={isLoading}
             />
           </motion.div>

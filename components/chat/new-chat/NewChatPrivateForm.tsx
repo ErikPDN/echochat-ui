@@ -1,5 +1,9 @@
+"use client";
+
 import { SearchBar } from "@/components/ui/SearchBar";
+import { useFindUserByUsername } from "@/lib/hooks/auth/useFindUserByUsername";
 import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
 
 interface NewChatPrivateFormProps {
   onBackClick: () => void;
@@ -10,6 +14,9 @@ export const NewChatPrivateForm = ({
   onBackClick,
   onCreatePrivateConversation,
 }: NewChatPrivateFormProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { data: user, isLoading } = useFindUserByUsername(searchQuery);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 p-4">
@@ -24,7 +31,7 @@ export const NewChatPrivateForm = ({
         <span className="text-lg font-medium">New Private Chat</span>
       </div>
 
-      <SearchBar placeholder="Enter username" />
+      <SearchBar placeholder="Enter username" onSearch={setSearchQuery} />
     </div>
   );
 };
