@@ -10,9 +10,13 @@ export const useCreatePrivateConversationMutation = () => {
 
   return useMutation({
     mutationFn: createPrivateConversation,
-    onSuccess: (id) => {
+    onSuccess: (conversation) => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      router.push(`$/chat/${id}`);
+      queryClient.setQueryData(
+        ["conversations", conversation.id],
+        conversation,
+      );
+      router.push(`/chat/${conversation.id}`);
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));

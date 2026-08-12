@@ -16,27 +16,24 @@ export const getConversations = async () => {
 export const createGroupConversation = async (
   data: ConversationGroupSchema,
 ) => {
-  const { type, ...responseData } = data;
   const response = await httpClient.post<ConversationResponse>(
     "/conversations/group",
-    responseData,
+    data,
   );
 
-  const { id } = response.data;
-  return id;
+  return response.data;
 };
 
 export const createPrivateConversation = async (
   data: ConversationPrivateSchema,
 ) => {
-  const { type, memberId } = data;
+  const { userId } = data;
   const response = await httpClient.post<ConversationResponse>(
     "/conversations/private",
-    { memberId },
+    { userId },
   );
 
-  const { id } = response.data;
-  return id;
+  return response.data;
 };
 
 export const addMemberToConversation = async (

@@ -5,14 +5,18 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export const useCreateGroupConversationMutation = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createGroupConversation,
-    onSuccess: (id) => {
+    onSuccess: (conversation) => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      router.push(`$/chat/${id}`);
+      queryClient.setQueryData(
+        ["conversations", conversation.id],
+        conversation,
+      );
+      router.push(`$/chat/${conversation.id}`);
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
