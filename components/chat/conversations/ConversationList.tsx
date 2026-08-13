@@ -13,7 +13,7 @@ export const ConversationList = ({
   conversations,
   isLoading,
 }: ConversationListProps) => {
-  if (!isLoading) {
+  if (isLoading) {
     return <ConversationListSkeleton />;
   }
 

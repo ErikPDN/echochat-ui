@@ -5,7 +5,7 @@ export const useFindUserByUsername = (query: string) => {
   return useQuery({
     queryKey: ["users", "search", query],
     queryFn: () => findByUsername(query),
-    enabled: query.trim().length > 0,
+    enabled: false,
     retry: false,
   });
 };

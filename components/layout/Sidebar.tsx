@@ -24,13 +24,12 @@ export const Sidebar = () => {
   const [direction, setDirection] = useState<"left" | "right">("right");
   const { mutate: logout, isPending } = useLogoutMutation();
   const { data: conversations, isLoading } = useGetConversationsQuery();
+  const user = useAuthStore((state) => state.user);
   const { onSearch, filteredConversations } = useConversationSearch(
     conversations?.map((conversation) =>
       mapConversationResponseToConversation(conversation, user?.id ?? ""),
     ) ?? [],
   );
-
-  const user = useAuthStore((state) => state.user);
 
   const handleLogout = () => {
     logout();

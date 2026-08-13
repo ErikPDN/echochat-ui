@@ -1,5 +1,6 @@
 import { LoginSchema, SignupSchema } from "../schemas/auth";
 import { AuthResponse } from "../types/auth-response";
+import { PublicUserResponse } from "../types/public-user.response";
 import { httpClient, refreshAccessToken } from "./http-client";
 
 export { refreshAccessToken };
@@ -24,7 +25,9 @@ export const logout = async () => {
   await httpClient.post("/auth/logout");
 };
 
-export const findByUsername = async (username: string) => {
+export const findByUsername = async (
+  username: string,
+): Promise<PublicUserResponse> => {
   const response = await httpClient.get(`/auth/users/username/${username}`);
   return response.data;
 };

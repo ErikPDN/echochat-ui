@@ -13,7 +13,7 @@ export const NewChatPrivateConversationList = ({
   conversations,
   isLoading,
 }: NewChatPrivateConversationListProps) => {
-  if (!isLoading) return <NewChatPrivateConversationListSkeleton />;
+  if (isLoading) return <NewChatPrivateConversationListSkeleton />;
 
   return (
     <div className="flex-1 overflow-y-auto mt-1/2">

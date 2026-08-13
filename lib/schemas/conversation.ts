@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const conversationPrivateSchema = z.object({
-  userId: z.uuidv4("Member ID must be a valid UUID"),
+  memberId: z.uuidv4("Member ID must be a valid UUID"),
 });
 
 export type ConversationPrivateSchema = z.infer<

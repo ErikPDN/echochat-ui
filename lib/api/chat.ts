@@ -27,10 +27,10 @@ export const createGroupConversation = async (
 export const createPrivateConversation = async (
   data: ConversationPrivateSchema,
 ) => {
-  const { userId } = data;
+  const { memberId } = data;
   const response = await httpClient.post<ConversationResponse>(
     "/conversations/private",
-    { userId },
+    { memberId },
   );
 
   return response.data;

@@ -70,9 +70,10 @@ export const NewChatPanel = ({
       {optionsView === "private-conversations" && (
         <NewChatPrivateForm
           onBackClick={() => setOptionsView("options")}
-          onCreatePrivateConversation={(userId: string) =>
-            createPrivateConversation({ userId })
+          onCreatePrivateConversation={(memberId: string) =>
+            createPrivateConversation({ memberId })
           }
+          isCreating={isCreatingPrivate}
         />
       )}
       {optionsView === "group-conversations" && (
@@ -82,6 +83,7 @@ export const NewChatPanel = ({
             createGroupConversation({ groupName, members })
           }
           conversations={conversations}
+          isCreating={isCreatingGroup}
         />
       )}
     </>
