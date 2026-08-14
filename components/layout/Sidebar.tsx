@@ -15,6 +15,7 @@ import { NewChatPanel } from "../chat/new-chat/NewChatPanel";
 import { motion, AnimatePresence } from "framer-motion";
 import { ConversationType } from "@/lib/types/conversation.response";
 import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
+import { variants } from "@/lib/utils/variants";
 
 export const Sidebar = () => {
   const [view, setView] = useState<"conversations" | "new-chat">(
@@ -34,16 +35,6 @@ export const Sidebar = () => {
   const handleLogout = () => {
     logout();
     setIsLogoutDialogOpen(false);
-  };
-
-  const variants = {
-    enter: (dir: "left" | "right") => ({
-      x: dir === "right" ? "100%" : "-100%",
-    }),
-    center: { x: 0 },
-    exit: (dir: "left" | "right") => ({
-      x: dir === "right" ? "-100%" : "100%",
-    }),
   };
 
   const privateConversations =

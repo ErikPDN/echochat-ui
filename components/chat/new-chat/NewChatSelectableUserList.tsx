@@ -47,6 +47,13 @@ export const NewChatSelectableUserList = ({
           </li>
         ))}
       </ul>
+
+      <div className="flex justify-end items-center p-4">
+        {/* TODO: Criar um primary button */}
+        <button className="bg-primary hover:bg-primary-hover text-white text-sm font-medium py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer">
+          Continue
+        </button>
+      </div>
     </div>
   );
 };

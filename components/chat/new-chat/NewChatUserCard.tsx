@@ -37,7 +37,10 @@ export const NewChatUserCard = ({
             </div>
             <button
               type="button"
-              onClick={() => onCreatePrivateConversation(user.id)}
+              onClick={() => {
+                console.log("USER ID", user.id);
+                onCreatePrivateConversation(user.id);
+              }}
               disabled={isLoading}
               className="bg-primary p-3 rounded-full hover:bg-primary-hover transition-colors duration-300 cursor-pointer"
             >
