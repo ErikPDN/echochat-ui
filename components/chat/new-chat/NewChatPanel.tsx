@@ -82,8 +82,9 @@ export const NewChatPanel = ({
           onCreateGroupConversation={(groupName: string, members: string[]) =>
             createGroupConversation({ groupName, members })
           }
-          conversations={conversations}
+          conversations={filteredConversations}
           isCreating={isCreatingGroup}
+          isLoadingConversations={isLoadingConversations}
         />
       )}
     </>

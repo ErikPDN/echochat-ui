@@ -1,9 +1,9 @@
 "use client";
 
+import { Avatar } from "@/components/ui/Avatar";
 import { PublicUserResponse } from "@/lib/types/public-user.response";
 import { stringToColor } from "@/lib/utils/string-to-color";
 import { SendHorizonal } from "lucide-react";
-import Image from "next/image";
 
 interface NewChatUserCardProps {
   user: PublicUserResponse;
@@ -19,23 +19,11 @@ export const NewChatUserCard = ({
   return (
     <div className="flex flex-col gap-2 p-4">
       <div className="w-full flex items-center rounded-lg gap-3 px-4 py-3 bg-zinc-800">
-        {user.avatarUrl ? (
-          <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-            <Image
-              src={user.avatarUrl}
-              alt={user.name}
-              width={40}
-              height={40}
-            />
-          </div>
-        ) : (
-          <div
-            className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold text-white shrink-0"
-            style={{ backgroundColor: stringToColor(user.name) }}
-          >
-            {user.name.charAt(0).toUpperCase()}
-          </div>
-        )}
+        <Avatar
+          name={user.name}
+          avatarColor={stringToColor(user.name)}
+          avatarUrl={user.avatarUrl}
+        />
 
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-center">

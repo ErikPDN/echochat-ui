@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Avatar } from "@/components/ui/Avatar";
 
 interface ConversationListItemProps {
   name: string;
@@ -28,18 +28,7 @@ export const ConversationListItem = ({
         isActive ? "bg-white/5" : ""
       }`}
     >
-      {avatarUrl ? (
-        <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-          <Image src={avatarUrl} alt={name} width={40} height={40} />
-        </div>
-      ) : (
-        <div
-          className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold text-white shrink-0"
-          style={{ backgroundColor: avatarColor }}
-        >
-          {name.charAt(0).toUpperCase()}
-        </div>
-      )}
+      <Avatar name={name} avatarColor={avatarColor} avatarUrl={avatarUrl} />
 
       <div className="flex-1 min-w-0 space-y-1/2">
         <div className="flex justify-between items-baseline gap-2">
