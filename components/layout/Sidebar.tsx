@@ -12,10 +12,10 @@ import { mapConversationResponseToConversation } from "@/lib/utils/map-conversat
 import { SidebarHeader } from "./SidebarHeader";
 import { SidebarFooter } from "./SidebarFooter";
 import { NewChatPanel } from "../chat/new-chat/NewChatPanel";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { ConversationType } from "@/lib/types/conversation.response";
 import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
-import { variants } from "@/lib/utils/variants";
+import { SlidePanel } from "../ui/SlidePanel";
 
 export const Sidebar = () => {
   const [view, setView] = useState<"conversations" | "new-chat">(
@@ -48,16 +48,7 @@ export const Sidebar = () => {
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
       <AnimatePresence mode="popLayout" initial={false} custom={direction}>
         {view === "conversations" ? (
-          <motion.div
-            key="conversations"
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
-            className="flex flex-col h-full"
-          >
+          <SlidePanel key="conversations" direction={direction}>
             <SidebarHeader
               onNewChatClick={() => {
                 setDirection("right");
@@ -73,18 +64,9 @@ export const Sidebar = () => {
               user={user}
               setIsLogoutDialogOpen={setIsLogoutDialogOpen}
             />
-          </motion.div>
+          </SlidePanel>
         ) : (
-          <motion.div
-            key="new-chat"
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
-            className="flex flex-col h-full"
-          >
+          <SlidePanel key="new-chat" direction={direction}>
             <NewChatPanel
               onBackClick={() => {
                 setDirection("left");
@@ -93,7 +75,7 @@ export const Sidebar = () => {
               conversations={privateConversations}
               isLoadingConversations={isLoading}
             />
-          </motion.div>
+          </SlidePanel>
         )}
       </AnimatePresence>
 

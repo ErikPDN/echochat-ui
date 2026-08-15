@@ -1,13 +1,15 @@
 "use client";
 
+import { SubmitEvent } from "react";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { useFindUserByUsername } from "@/lib/hooks/auth/useFindUserByUsername";
 import { getErrorMessage } from "@/lib/utils/get-error-message";
-import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NewChatUserCard } from "./NewChatUserCard";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
+import { ButtonPrimary } from "@/components/ui/ButtonPrimary";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 
 interface NewChatPrivateFormProps {
   onBackClick: () => void;
@@ -37,19 +39,15 @@ export const NewChatPrivateForm = ({
     }
   }, [error, isUserNotFound]);
 
-  return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2 p-4">
-        <button
-          type="button"
-          onClick={onBackClick}
-          className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transition-colors duration-300 cursor-pointer"
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </button>
+  const handleSearchSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchInput.trim() === "" || isLoadingUser) return;
+    refetchUser();
+  };
 
-        <span className="text-lg font-medium">New Private Chat</span>
-      </div>
+  return (
+    <form className="flex flex-col" onSubmit={handleSearchSubmit}>
+      <PanelHeader onBackClick={onBackClick} title="New Private Chat" />
 
       <SearchBar placeholder="Enter username" onSearch={setSearchInput} />
 
@@ -69,20 +67,14 @@ export const NewChatPrivateForm = ({
 
       {!user && (
         <div className="flex items-center justify-end gap-2 p-4">
-          <button
-            type="button"
+          <ButtonPrimary
             onClick={() => refetchUser()}
-            disabled={isLoadingUser || !searchInput.trim()}
-            className="w-fit bg-primary text-sm text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-hover transition-colors duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoadingUser ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            ) : (
-              "Search"
-            )}
-          </button>
+            text="Search"
+            isLoading={isLoadingUser}
+            disabledCondition={searchInput.trim() === "" || isLoadingUser}
+          />
         </div>
       )}
-    </div>
+    </form>
   );
 };

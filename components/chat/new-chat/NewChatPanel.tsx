@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-
 import {
   useCreatePrivateConversationMutation,
   useCreateGroupConversationMutation,
@@ -12,10 +10,11 @@ import { Conversation } from "@/lib/types/conversation";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { useState } from "react";
 import { NewChatPrivateForm } from "./NewChatPrivateForm";
-import { NewChatGroupForm } from "./NewChatGroupForm";
+import { NewChatGroupOption } from "./NewChatGroupOption";
 import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
 import { AnimatePresence, motion } from "framer-motion";
-import { variants } from "@/lib/utils/variants";
+import { SlidePanel } from "@/components/ui/SlidePanel";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 
 interface NewChatPanelProps {
   onBackClick: () => void;
@@ -43,27 +42,9 @@ export const NewChatPanel = ({
   return (
     <AnimatePresence mode="popLayout" initial={false} custom={direction}>
       {optionsView === "options" && (
-        <motion.div
-          key="options"
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
-          className="flex flex-col h-full"
-        >
+        <SlidePanel key="options" direction={direction}>
           <div className="flex flex-col">
-            <div className="flex items-center gap-2 p-4">
-              <button
-                onClick={onBackClick}
-                className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transition-colors duration-300 cursor-pointer"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-
-              <span className="text-lg font-medium">New Chat</span>
-            </div>
+            <PanelHeader onBackClick={onBackClick} title="New Chat" />
 
             <SearchBar placeholder="Search for username" onSearch={onSearch} />
 
@@ -83,19 +64,10 @@ export const NewChatPanel = ({
               isLoading={isLoadingConversations}
             />
           </div>
-        </motion.div>
+        </SlidePanel>
       )}
       {optionsView === "private-conversations" && (
-        <motion.div
-          key="private-conversations"
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
-          className="flex flex-col h-full"
-        >
+        <SlidePanel key="private-conversations" direction={direction}>
           <NewChatPrivateForm
             onBackClick={() => {
               setDirection("left");
@@ -106,20 +78,11 @@ export const NewChatPanel = ({
             }
             isCreating={isCreatingPrivate}
           />
-        </motion.div>
+        </SlidePanel>
       )}
       {optionsView === "group-conversations" && (
-        <motion.div
-          key="group-conversations"
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
-          className="flex flex-col h-full"
-        >
-          <NewChatGroupForm
+        <SlidePanel key="group-conversations" direction={direction}>
+          <NewChatGroupOption
             onBackClick={() => {
               setDirection("left");
               setOptionsView("options");
@@ -131,7 +94,7 @@ export const NewChatPanel = ({
             isCreating={isCreatingGroup}
             isLoadingConversations={isLoadingConversations}
           />
-        </motion.div>
+        </SlidePanel>
       )}
     </AnimatePresence>
   );

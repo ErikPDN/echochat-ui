@@ -2,6 +2,7 @@ import { Conversation } from "@/lib/types/conversation";
 import { NewChatSelectableUserListItem } from "./NewChatSelectableUserListItem";
 import { NewChatSelectableUserListSkeleton } from "./NewChatSelectableUserListSkeleton";
 import { useState } from "react";
+import { ButtonPrimary } from "@/components/ui/ButtonPrimary";
 
 interface NewChatSelectableUserListProps {
   conversations?: Conversation[];
@@ -34,7 +35,7 @@ export const NewChatSelectableUserList = ({
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <ul className="flex flex-col gap-2 p-4">
+      <ul className="flex flex-col gap-2 px-4 py-2">
         {conversations?.map((conversation) => (
           <li key={conversation.id}>
             <NewChatSelectableUserListItem
@@ -47,13 +48,6 @@ export const NewChatSelectableUserList = ({
           </li>
         ))}
       </ul>
-
-      <div className="flex justify-end items-center p-4">
-        {/* TODO: Criar um primary button */}
-        <button className="bg-primary hover:bg-primary-hover text-white text-sm font-medium py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer">
-          Continue
-        </button>
-      </div>
     </div>
   );
 };
