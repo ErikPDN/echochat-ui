@@ -6,7 +6,7 @@ export const NewChatSelectableUserListSkeleton = ({
   count = 6,
 }: NewChatSelectableUserListSkeletonProps) => {
   return (
-    <div className="flex-1 overflow-y-auto mt-1/2">
+    <div className="flex-1 overflow-y-auto mt-0.5">
       <ul className="flex flex-col gap-2 p-4">
         {Array.from({ length: count }).map((_, index) => (
           <li key={index} className="flex items-center gap-3 px-1 py-2">

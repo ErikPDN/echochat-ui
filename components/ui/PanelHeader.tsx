@@ -11,7 +11,7 @@ export const PanelHeader = ({ onBackClick, title }: PanelHeaderProps) => {
       <button
         type="button"
         onClick={onBackClick}
-        className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transtion-colors duration-300 cursor-pointer"
+        className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-600 transition-colors duration-300 cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4" />
       </button>

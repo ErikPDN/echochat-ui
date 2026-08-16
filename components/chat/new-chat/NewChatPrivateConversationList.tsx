@@ -18,7 +18,7 @@ export const NewChatPrivateConversationList = ({
   if (isLoading) return <NewChatPrivateConversationListSkeleton />;
 
   return (
-    <div className="flex-1 overflow-y-auto mt-1/2">
+    <div className="flex-1 overflow-y-auto mt-0.5">
       <ul className="flex flex-col gap-2 p-4">
         <span className="text-sm font-medium text-zinc-400 ml-2">
           Private Conversations
