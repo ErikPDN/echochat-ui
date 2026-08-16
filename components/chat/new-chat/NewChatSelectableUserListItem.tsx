@@ -5,7 +5,7 @@ interface NewChatSelectableUserListItemProps {
   name: string;
   avatarColor: string;
   avatarUrl?: string;
-  isSelected: boolean;
+  isSelected?: boolean;
   onToggle: () => void;
 }
 

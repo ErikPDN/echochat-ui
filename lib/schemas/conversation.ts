@@ -10,9 +10,17 @@ export type ConversationPrivateSchema = z.infer<
 
 export const conversationGroupSchema = z.object({
   groupName: z.string().min(1, "Group name is required"),
-  members: z
+  memberIds: z
     .array(z.uuidv4("Member ID must be a valid UUID"))
     .min(1, "Select at least one member to start a group conversation with"),
 });
 
 export type ConversationGroupSchema = z.infer<typeof conversationGroupSchema>;
+
+export const conversationGroupFormSchema = z.object({
+  groupName: z.string().min(1, "Group name is required"),
+});
+
+export type ConversationGroupFormSchema = z.infer<
+  typeof conversationGroupFormSchema
+>;

@@ -7,11 +7,13 @@ import { NewChatPrivateConversationListSkeleton } from "./NewChatPrivateConversa
 interface NewChatPrivateConversationListProps {
   conversations?: Conversation[];
   isLoading?: boolean;
+  onSelectConversation: (conversationId: string) => void;
 }
 
 export const NewChatPrivateConversationList = ({
   conversations,
   isLoading,
+  onSelectConversation,
 }: NewChatPrivateConversationListProps) => {
   if (isLoading) return <NewChatPrivateConversationListSkeleton />;
 
@@ -28,6 +30,7 @@ export const NewChatPrivateConversationList = ({
               name={conversation.name}
               avatarColor={conversation.avatarColor}
               avatarUrl={conversation.avatarUrl}
+              onClick={() => onSelectConversation(conversation.id)}
             />
           </li>
         ))}

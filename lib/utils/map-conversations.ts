@@ -20,6 +20,14 @@ export const mapConversationResponseToConversation = (
 
   return {
     id: dto.id,
+    members: dto.members.map((member) => ({
+      userId: member.userId,
+      username: member.username,
+      name: member.name,
+      avatarColor: stringToColor(member.userId),
+      avatarUrl: member.avatarUrl,
+    })),
+    type: dto.type,
     name,
     avatarColor: stringToColor(
       dto.type === ConversationType.GROUP

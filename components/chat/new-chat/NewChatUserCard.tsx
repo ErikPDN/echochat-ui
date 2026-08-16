@@ -38,7 +38,6 @@ export const NewChatUserCard = ({
             <button
               type="button"
               onClick={() => {
-                console.log("USER ID", user.id);
                 onCreatePrivateConversation(user.id);
               }}
               disabled={isLoading}

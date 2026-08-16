@@ -13,11 +13,14 @@ import { SidebarHeader } from "./SidebarHeader";
 import { SidebarFooter } from "./SidebarFooter";
 import { NewChatPanel } from "../chat/new-chat/NewChatPanel";
 import { AnimatePresence } from "framer-motion";
-import { ConversationType } from "@/lib/types/conversation.response";
-import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
+import { useSearch } from "@/lib/hooks/useSearch";
 import { SlidePanel } from "../ui/SlidePanel";
+import { Conversation } from "@/lib/types/conversation";
+import { ConversationType } from "@/lib/types/conversation.response";
+import { useRouter } from "next/navigation";
 
 export const Sidebar = () => {
+  const router = useRouter();
   const [view, setView] = useState<"conversations" | "new-chat">(
     "conversations",
   );
@@ -26,16 +29,12 @@ export const Sidebar = () => {
   const { mutate: logout, isPending } = useLogoutMutation();
   const { data: conversations, isLoading } = useGetConversationsQuery();
   const user = useAuthStore((state) => state.user);
-  const { onSearch, filteredConversations } = useConversationSearch(
-    conversations?.map((conversation) =>
-      mapConversationResponseToConversation(conversation, user?.id ?? ""),
-    ) ?? [],
-  );
-
-  const handleLogout = () => {
-    logout();
-    setIsLogoutDialogOpen(false);
-  };
+  const { onSearch, filteredItems: filteredConversations } =
+    useSearch<Conversation>(
+      conversations?.map((conversation) =>
+        mapConversationResponseToConversation(conversation, user?.id ?? ""),
+      ) ?? [],
+    );
 
   const privateConversations =
     conversations
@@ -43,6 +42,15 @@ export const Sidebar = () => {
       .map((conversation) =>
         mapConversationResponseToConversation(conversation, user?.id ?? ""),
       ) ?? [];
+
+  const handleLogout = () => {
+    logout();
+    setIsLogoutDialogOpen(false);
+  };
+
+  const handleSelectConversation = (conversationId: string) => {
+    router.push(`/chat/${conversationId}`);
+  };
 
   return (
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
@@ -59,6 +67,7 @@ export const Sidebar = () => {
             <ConversationList
               conversations={filteredConversations}
               isLoading={isLoading}
+              onSelectConversation={handleSelectConversation}
             />
             <SidebarFooter
               user={user}

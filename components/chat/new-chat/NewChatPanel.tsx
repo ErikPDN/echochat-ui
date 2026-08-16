@@ -6,15 +6,17 @@ import {
 } from "@/lib/hooks/chat";
 import { NewChatOptions } from "./NewChatOptions";
 import { NewChatPrivateConversationList } from "./NewChatPrivateConversationList";
-import { Conversation } from "@/lib/types/conversation";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { useState } from "react";
 import { NewChatPrivateForm } from "./NewChatPrivateForm";
 import { NewChatGroupOption } from "./NewChatGroupOption";
-import { useConversationSearch } from "@/lib/hooks/useConversationSearch";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { SlidePanel } from "@/components/ui/SlidePanel";
 import { PanelHeader } from "@/components/ui/PanelHeader";
+import { useContacts } from "@/lib/hooks/chat/useContacts";
+import { useSearch } from "@/lib/hooks/useSearch";
+import { Conversation } from "@/lib/types/conversation";
+import { useRouter } from "next/navigation";
 
 interface NewChatPanelProps {
   onBackClick: () => void;
@@ -27,6 +29,7 @@ export const NewChatPanel = ({
   conversations,
   isLoadingConversations,
 }: NewChatPanelProps) => {
+  const router = useRouter();
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [optionsView, setOptionsView] = useState<
     "options" | "private-conversations" | "group-conversations"
@@ -35,9 +38,14 @@ export const NewChatPanel = ({
     useCreateGroupConversationMutation();
   const { mutate: createPrivateConversation, isPending: isCreatingPrivate } =
     useCreatePrivateConversationMutation();
-  const { onSearch, filteredConversations } = useConversationSearch(
-    conversations ?? [],
-  );
+  const { contacts, isLoading: isLoadingContacts } = useContacts();
+  const { onSearch, filteredItems: filteredConversations } =
+    useSearch<Conversation>(conversations ?? []);
+
+  const handleSelectConversation = (conversationId: string) => {
+    router.push(`/chat/${conversationId}`);
+    onBackClick();
+  };
 
   return (
     <AnimatePresence mode="popLayout" initial={false} custom={direction}>
@@ -62,6 +70,7 @@ export const NewChatPanel = ({
             <NewChatPrivateConversationList
               conversations={filteredConversations}
               isLoading={isLoadingConversations}
+              onSelectConversation={handleSelectConversation}
             />
           </div>
         </SlidePanel>
@@ -87,12 +96,13 @@ export const NewChatPanel = ({
               setDirection("left");
               setOptionsView("options");
             }}
-            onCreateGroupConversation={(groupName: string, members: string[]) =>
-              createGroupConversation({ groupName, members })
-            }
-            conversations={filteredConversations}
+            onCreateGroupConversation={(
+              groupName: string,
+              memberIds: string[],
+            ) => createGroupConversation({ groupName, memberIds })}
+            contacts={contacts}
             isCreating={isCreatingGroup}
-            isLoadingConversations={isLoadingConversations}
+            isLoadingContacts={isLoadingContacts}
           />
         </SlidePanel>
       )}

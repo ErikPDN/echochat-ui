@@ -10,6 +10,7 @@ interface ConversationListItemProps {
   avatarUrl?: string;
   unreadCount?: number;
   isActive?: boolean;
+  onClick: () => void;
 }
 
 export const ConversationListItem = ({
@@ -20,10 +21,12 @@ export const ConversationListItem = ({
   avatarUrl,
   unreadCount,
   isActive,
+  onClick,
 }: ConversationListItemProps) => {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={`w-full flex items-center rounded-lg gap-3 px-4 py-3 text-left hover:bg-white/5 cursor-pointer ${
         isActive ? "bg-white/5" : ""
       }`}

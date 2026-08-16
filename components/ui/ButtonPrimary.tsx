@@ -1,8 +1,9 @@
 interface ButtonPrimaryProps {
-  onClick: () => void;
+  onClick?: () => void;
   text: string;
   isLoading?: boolean;
   disabledCondition?: boolean;
+  type?: "button" | "submit";
 }
 
 export const ButtonPrimary = ({
@@ -10,10 +11,11 @@ export const ButtonPrimary = ({
   text,
   isLoading,
   disabledCondition = false,
+  type = "button",
 }: ButtonPrimaryProps) => {
   return (
     <button
-      type="button"
+      type={type}
       className="bg-primary hover:bg-primary-hover text-white text-sm font-semibold py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer"
       onClick={onClick}
       disabled={disabledCondition}

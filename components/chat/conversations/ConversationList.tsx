@@ -7,11 +7,13 @@ import { ConversationListSkeleton } from "./ConversationListSkeleton";
 interface ConversationListProps {
   conversations?: Conversation[];
   isLoading?: boolean;
+  onSelectConversation: (conversationId: string) => void;
 }
 
 export const ConversationList = ({
   conversations,
   isLoading,
+  onSelectConversation,
 }: ConversationListProps) => {
   if (isLoading) {
     return <ConversationListSkeleton />;
@@ -30,6 +32,7 @@ export const ConversationList = ({
               avatarUrl={conversation.avatarUrl}
               unreadCount={conversation.unreadCount}
               isActive={conversation.isActive}
+              onClick={() => onSelectConversation(conversation.id)}
             />
           </li>
         ))}

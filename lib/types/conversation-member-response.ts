@@ -7,6 +7,7 @@ export interface ConversationMemberResponse {
   userId: string;
   username: string;
   name: string;
+  avatarUrl?: string;
   role: MemberRole;
   joinedAt: Date;
   leftAt?: Date;
