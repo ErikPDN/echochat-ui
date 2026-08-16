@@ -47,6 +47,31 @@ export const NewChatPanel = ({
     onBackClick();
   };
 
+  const handleCreatePrivateConversation = (memberId: string) => {
+    createPrivateConversation(
+      { memberId },
+      {
+        onSuccess: () => {
+          onBackClick();
+        },
+      },
+    );
+  };
+
+  const handleCreateGroupConversation = (
+    groupName: string,
+    memberIds: string[],
+  ) => {
+    createGroupConversation(
+      { groupName, memberIds },
+      {
+        onSuccess: () => {
+          onBackClick();
+        },
+      },
+    );
+  };
+
   return (
     <AnimatePresence mode="popLayout" initial={false} custom={direction}>
       {optionsView === "options" && (
@@ -82,9 +107,7 @@ export const NewChatPanel = ({
               setDirection("left");
               setOptionsView("options");
             }}
-            onCreatePrivateConversation={(memberId: string) =>
-              createPrivateConversation({ memberId })
-            }
+            onCreatePrivateConversation={handleCreatePrivateConversation}
             isCreating={isCreatingPrivate}
           />
         </SlidePanel>
@@ -96,10 +119,7 @@ export const NewChatPanel = ({
               setDirection("left");
               setOptionsView("options");
             }}
-            onCreateGroupConversation={(
-              groupName: string,
-              memberIds: string[],
-            ) => createGroupConversation({ groupName, memberIds })}
+            onCreateGroupConversation={handleCreateGroupConversation}
             contacts={contacts}
             isCreating={isCreatingGroup}
             isLoadingContacts={isLoadingContacts}

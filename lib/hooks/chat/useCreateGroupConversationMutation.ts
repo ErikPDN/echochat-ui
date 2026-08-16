@@ -16,7 +16,7 @@ export const useCreateGroupConversationMutation = () => {
         ["conversations", conversation.id],
         conversation,
       );
-      router.push(`$/chat/${conversation.id}`);
+      router.push(`/chat/${conversation.id}`);
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
