@@ -1,10 +1,22 @@
-export interface Conversation {
-  id: string;
+import { ConversationType } from "./conversation.response";
+
+export interface ConversationMember {
+  userId: string;
+  username: string;
   name: string;
-  lastMessage: string;
-  time: string;
   avatarColor: string;
   avatarUrl?: string;
+}
+
+export interface Conversation {
+  id: string;
+  type: ConversationType;
+  name: string;
+  avatarColor: string;
+  avatarUrl?: string;
+  lastMessage?: string;
+  time?: string;
   unreadCount?: number;
   isActive?: boolean;
+  members: ConversationMember[];
 }
