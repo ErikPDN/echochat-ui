@@ -3,14 +3,20 @@ import Image from "next/image";
 interface AvatarProps {
   name: string;
   avatarColor: string;
-  avatarUrl?: string;
+  avatarKey?: string;
+  size?: number;
 }
 
-export const Avatar = ({ name, avatarColor, avatarUrl }: AvatarProps) => {
-  if (avatarUrl) {
+export const Avatar = ({
+  name,
+  avatarColor,
+  avatarKey,
+  size = 40,
+}: AvatarProps) => {
+  if (avatarKey) {
     return (
       <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-        <Image src={avatarUrl} alt={name} width={40} height={40} />
+        <Image src={avatarKey} alt={name} width={size} height={size} />
       </div>
     );
   }

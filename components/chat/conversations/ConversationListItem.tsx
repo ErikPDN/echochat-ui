@@ -31,7 +31,7 @@ export const ConversationListItem = ({
         isActive ? "bg-white/5" : ""
       }`}
     >
-      <Avatar name={name} avatarColor={avatarColor} avatarUrl={avatarUrl} />
+      <Avatar name={name} avatarColor={avatarColor} avatarKey={avatarUrl} />
 
       <div className="flex-1 min-w-0 space-y-1/2">
         <div className="flex justify-between items-baseline gap-2">

@@ -18,10 +18,11 @@ import { SlidePanel } from "../ui/SlidePanel";
 import { Conversation } from "@/lib/types/conversation";
 import { ConversationType } from "@/lib/types/conversation.response";
 import { useRouter } from "next/navigation";
+import { ProfilePanel } from "../chat/profile/ProfilePanel";
 
 export const Sidebar = () => {
   const router = useRouter();
-  const [view, setView] = useState<"conversations" | "new-chat">(
+  const [view, setView] = useState<"conversations" | "new-chat" | "profile">(
     "conversations",
   );
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -52,10 +53,16 @@ export const Sidebar = () => {
     router.push(`/chat/${conversationId}`);
   };
 
+  const handleProfileClick = () => {
+    router.push("/profile");
+    setDirection("right");
+    setView("profile");
+  };
+
   return (
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
       <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-        {view === "conversations" ? (
+        {view === "conversations" && (
           <SlidePanel key="conversations" direction={direction}>
             <SidebarHeader
               onNewChatClick={() => {
@@ -72,9 +79,11 @@ export const Sidebar = () => {
             <SidebarFooter
               user={user}
               setIsLogoutDialogOpen={setIsLogoutDialogOpen}
+              onProfileClick={handleProfileClick}
             />
           </SlidePanel>
-        ) : (
+        )}
+        {view === "new-chat" && (
           <SlidePanel key="new-chat" direction={direction}>
             <NewChatPanel
               onBackClick={() => {
@@ -83,6 +92,16 @@ export const Sidebar = () => {
               }}
               conversations={privateConversations}
               isLoadingConversations={isLoading}
+            />
+          </SlidePanel>
+        )}
+        {view === "profile" && (
+          <SlidePanel key="profile" direction={direction}>
+            <ProfilePanel
+              onBackClick={() => {
+                setDirection("left");
+                setView("conversations");
+              }}
             />
           </SlidePanel>
         )}

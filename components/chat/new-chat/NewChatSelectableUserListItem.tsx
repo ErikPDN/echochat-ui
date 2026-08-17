@@ -22,7 +22,7 @@ export const NewChatSelectableUserListItem = ({
       onClick={onToggle}
       className={`relative w-full flex items-center rounded-lg gap-3 px-4 py-3 text-left cursor-pointer ${isSelected ? "bg-primary/10 border border-primary/40" : "border border-transparent"}`}
     >
-      <Avatar name={name} avatarColor={avatarColor} avatarUrl={avatarUrl} />
+      <Avatar name={name} avatarColor={avatarColor} avatarKey={avatarUrl} />
       <span className="flex-1 min-w-0 text-sm font-medium text-white">
         {name}
       </span>

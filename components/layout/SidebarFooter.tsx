@@ -7,17 +7,20 @@ import Image from "next/image";
 interface SidebarFooterProps {
   user: User | null;
   setIsLogoutDialogOpen: (open: boolean) => void;
+  onProfileClick: () => void;
 }
 
 export const SidebarFooter = ({
   user,
   setIsLogoutDialogOpen,
+  onProfileClick,
 }: SidebarFooterProps) => {
   return (
     <div className="w-full border border-t border-card-border p-3 flex items-center justify-between">
       <div className="flex items-center justify-center gap-2">
         <button
           type="button"
+          onClick={onProfileClick}
           className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-semibold shrink-0 cursor-pointer"
         >
           {user?.avatarKey ? (

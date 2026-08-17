@@ -21,7 +21,7 @@ export const NewChatPrivateConversationListItem = ({
       className="w-full flex items-center rounded-lg gap-3 px-4 py-3 text-left hover:bg-white/5 cursor-pointer"
       onClick={onClick}
     >
-      <Avatar name={name} avatarColor={avatarColor} avatarUrl={avatarUrl} />
+      <Avatar name={name} avatarColor={avatarColor} avatarKey={avatarUrl} />
 
       <div className="flex-1 min-w-0">
         <div className="flex justify-between items-center">
