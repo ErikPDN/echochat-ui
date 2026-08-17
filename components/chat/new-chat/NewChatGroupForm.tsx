@@ -73,7 +73,7 @@ export const NewChatGroupForm = ({
           type="submit"
           text="Create"
           isLoading={isCreating}
-          disabledCondition={isCreating || !memberIds || memberIds.length === 0}
+          disabledCondition={isCreating || !memberIds}
         />
       </div>
     </form>

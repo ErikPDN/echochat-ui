@@ -20,7 +20,7 @@ export const ConversationList = ({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin">
       <ul className="flex flex-col gap-2 p-4">
         {conversations?.map((conversation) => (
           <li key={conversation.id}>
