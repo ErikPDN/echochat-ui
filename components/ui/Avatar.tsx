@@ -3,7 +3,7 @@ import Image from "next/image";
 interface AvatarProps {
   name: string;
   avatarColor: string;
-  avatarKey?: string;
+  avatarUrl?: string;
   size?: number;
   textSize?: number;
 }
@@ -11,17 +11,24 @@ interface AvatarProps {
 export const Avatar = ({
   name,
   avatarColor,
-  avatarKey,
+  avatarUrl,
   size = 40,
   textSize = 14,
 }: AvatarProps) => {
-  if (avatarKey) {
+  if (avatarUrl) {
     return (
       <div
         className="rounded-full overflow-hidden shrink-0"
         style={{ width: size, height: size, fontSize: textSize }}
       >
-        <Image src={avatarKey} alt={name} width={size} height={size} />
+        <Image
+          src={avatarUrl}
+          alt={name}
+          width={size}
+          height={size}
+          unoptimized
+          loading="eager"
+        />
       </div>
     );
   }

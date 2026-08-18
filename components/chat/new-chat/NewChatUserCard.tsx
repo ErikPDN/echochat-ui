@@ -22,7 +22,7 @@ export const NewChatUserCard = ({
         <Avatar
           name={user.name}
           avatarColor={stringToColor(user.name)}
-          avatarKey={user.avatarKey}
+          avatarUrl={user.avatarUrl}
         />
 
         <div className="flex-1 min-w-0">

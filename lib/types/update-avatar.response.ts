@@ -1,3 +1,3 @@
 export interface UpdateAvatarResponse {
-  avatarKey: string;
+  avatarUrl: string;
 }

@@ -2,7 +2,7 @@
 
 import { User } from "@/lib/types/user";
 import { LogOut } from "lucide-react";
-import Image from "next/image";
+import { Avatar } from "../ui/Avatar";
 
 interface SidebarFooterProps {
   user: User | null;
@@ -21,13 +21,14 @@ export const SidebarFooter = ({
         <button
           type="button"
           onClick={onProfileClick}
-          className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-semibold shrink-0 cursor-pointer"
+          className="flex cursor-pointer"
         >
-          {user?.avatarKey ? (
-            <Image src={user.avatarKey} alt="Avatar" width={32} height={32} />
-          ) : (
-            user?.username.charAt(0).toUpperCase()
-          )}
+          <Avatar
+            name={user?.name ?? "Unknown"}
+            avatarColor="#6366f1"
+            avatarUrl={user?.avatarUrl}
+            size={32}
+          />
         </button>
         <div className="flex flex-col mt-1.5">
           <div className="text-xs font-medium">{user?.username}</div>

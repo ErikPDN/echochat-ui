@@ -28,7 +28,7 @@ export const ProfilePanel = ({ onBackClick }: ProfilePanelProps) => {
           <Avatar
             name={user?.name ?? "Unknown"}
             avatarColor="#6366f1"
-            avatarKey={user?.avatarKey}
+            avatarUrl={user?.avatarUrl}
           />
 
           <div className="flex-1 min-w-0 space-y-0.5">
