@@ -54,7 +54,7 @@ export const Sidebar = () => {
   };
 
   const handleProfileClick = () => {
-    router.push("/profile");
+    router.push("/profile/avatar");
     setDirection("right");
     setView("profile");
   };

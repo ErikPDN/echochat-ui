@@ -5,6 +5,7 @@ interface AvatarProps {
   avatarColor: string;
   avatarKey?: string;
   size?: number;
+  textSize?: number;
 }
 
 export const Avatar = ({
@@ -12,10 +13,14 @@ export const Avatar = ({
   avatarColor,
   avatarKey,
   size = 40,
+  textSize = 14,
 }: AvatarProps) => {
   if (avatarKey) {
     return (
-      <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
+      <div
+        className="rounded-full overflow-hidden shrink-0"
+        style={{ width: size, height: size, fontSize: textSize }}
+      >
         <Image src={avatarKey} alt={name} width={size} height={size} />
       </div>
     );
@@ -23,8 +28,13 @@ export const Avatar = ({
 
   return (
     <div
-      className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold text-white shrink-0"
-      style={{ backgroundColor: avatarColor }}
+      className="rounded-full flex items-center justify-center font-semibold text-white shrink-0"
+      style={{
+        backgroundColor: avatarColor,
+        width: size,
+        height: size,
+        fontSize: textSize,
+      }}
     >
       {name.charAt(0).toLocaleUpperCase()}
     </div>
