@@ -52,3 +52,7 @@ export const updateAvatar = async ({
 
   return response.data;
 };
+
+export const deleteAvatar = async (): Promise<void> => {
+  await httpClient.delete("/auth/me/avatar");
+};
