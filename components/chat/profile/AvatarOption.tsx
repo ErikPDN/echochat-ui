@@ -2,14 +2,19 @@
 
 import { ReactNode } from "react";
 
-interface MenuItemProps {
+interface AvatarOptionProps {
   icon: ReactNode;
   label: string;
   onClick: () => void;
   disabled?: boolean;
 }
 
-export const MenuItem = ({ icon, label, onClick, disabled }: MenuItemProps) => {
+export const AvatarOption = ({
+  icon,
+  label,
+  onClick,
+  disabled,
+}: AvatarOptionProps) => {
   return (
     <button
       type="button"

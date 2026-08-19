@@ -1,7 +1,7 @@
 "use client";
 
 import { Eye, Trash2, Upload } from "lucide-react";
-import { MenuItem } from "./MenuItem";
+import { AvatarOption } from "./AvatarOption";
 
 interface ModalProfileAvatarOptionsProps {
   isOpen: boolean;
@@ -37,7 +37,7 @@ export const ModalProfileAvatarOptions = ({
 
       <div className="absolute mt-2 top-full left-1/2 -translate-x-1/2 z-50 w-36 rounded-lg bg-card shadow-lg border border-card-border p-1">
         {hasAvatar && (
-          <MenuItem
+          <AvatarOption
             icon={
               <>
                 <Eye className="h-4 w-4" />
@@ -50,7 +50,7 @@ export const ModalProfileAvatarOptions = ({
             }}
           />
         )}
-        <MenuItem
+        <AvatarOption
           icon={
             <>
               <Upload className="h-4 w-4" />
@@ -64,7 +64,7 @@ export const ModalProfileAvatarOptions = ({
           disabled={isUploadAvatarLoading}
         />
         {hasAvatar && (
-          <MenuItem
+          <AvatarOption
             icon={
               <>
                 <Trash2 className="h-4 w-4" />
