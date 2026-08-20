@@ -3,7 +3,7 @@
 import { Avatar } from "@/components/ui/Avatar";
 import { useMeQuery } from "@/lib/hooks/auth/useMeQuery";
 import { useMeUpdateAvatar } from "@/lib/hooks/auth/useMeUpdateAvatar";
-import { Camera, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { ModalProfileAvatarOptions } from "./ModalProfileAvatarOptions";
 import { useMeDeleteAvatar } from "@/lib/hooks/auth/useMeDeleteAvatar";
@@ -76,7 +76,7 @@ export const ProfileAvatarUpload = () => {
                 textSize={24}
                 size={84}
               />
-              <div className="absolute -top-1 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-gray-300 cursor-pointer">
+              <div className="absolute -top-1 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-gray-300 cursor-pointer">
                 <Pencil className="h-4 w-4 text-zinc-900" />
               </div>
             </>
