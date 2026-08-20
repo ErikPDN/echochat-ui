@@ -1,18 +1,35 @@
-import { User } from "lucide-react";
+"use client";
+
+import { useMeQuery } from "@/lib/hooks/auth/useMeQuery";
+import { EditableProfileField } from "./EditableProfileField";
+import { nameSchema, usernameSchema } from "@/lib/schemas/profile";
+import { AtSign, User } from "lucide-react";
+import { useMeUpdateUser } from "@/lib/hooks/auth/useMeUpdateUser";
 
 export const ProfileAttributesUpload = () => {
-  return (
-    <div className="flex flex-col justify-center items-center max-w-2xl w-full my-4">
-      <div className="relative flex w-full">
-        <div className="absolute left-6 top-1/2 -translate-y-1/2">
-          <User className="text-gray-500 h-4 w-4" />
-        </div>
+  const { data: user, isLoading: isLoadingUser } = useMeQuery();
+  const { mutate: updateUser, isPending: isUpdatingUser } = useMeUpdateUser();
 
-        <input
-          type="text"
-          className="w-full border border-card-border rounded-xl px-3 py-2 pl-8 bg-input-background focus:outline-none mx-4"
-        />
-      </div>
+  if (isLoadingUser) return null;
+
+  return (
+    <div className="flex flex-col justify-center items-center max-w-2xl w-full my-8 space-y-8">
+      <EditableProfileField
+        icon={<User className="h-4 w-4 text-gray-500" />}
+        value={user?.name ?? ""}
+        fieldName="name"
+        schema={nameSchema}
+        onSave={() => updateUser({ name })}
+        isSaving={isUpdatingUser}
+      />
+      <EditableProfileField
+        icon={<AtSign className="h-4 w-4 text-gray-500" />}
+        value={user?.username ?? ""}
+        fieldName="username"
+        schema={usernameSchema}
+        onSave={() => updateUser({ username })}
+        isSaving={isUpdatingUser}
+      />
     </div>
   );
 };

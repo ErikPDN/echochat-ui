@@ -4,6 +4,7 @@ import { PublicUserResponse } from "../types/public-user.response";
 import { UpdateAvatarResponse } from "../types/update-avatar.response";
 import { UpdateAvatarRequest } from "../types/update-avatar";
 import { httpClient, refreshAccessToken } from "./http-client";
+import { UpdateUserRequest } from "../types/update-user";
 
 export { refreshAccessToken };
 
@@ -55,4 +56,11 @@ export const updateAvatar = async ({
 
 export const deleteAvatar = async (): Promise<void> => {
   await httpClient.delete("/auth/me/avatar");
+};
+
+export const updateUserProfile = async (
+  data: UpdateUserRequest,
+): Promise<PublicUserResponse> => {
+  const response = await httpClient.patch<PublicUserResponse>("/auth/me", data);
+  return response.data;
 };
