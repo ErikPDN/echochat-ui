@@ -1,6 +1,8 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Pencil } from "lucide-react";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState, MouseEvent } from "react";
 import { FieldValues, Path, useForm } from "react-hook-form";
 import { ZodType } from "zod";
 
@@ -23,10 +25,6 @@ export const EditableProfileField = <T extends FieldValues>({
 }: EditableProfileFieldProps<T>) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    console.log("fieldName changed:", fieldName);
-  }, [fieldName]);
-
   const {
     register,
     handleSubmit,
@@ -38,7 +36,8 @@ export const EditableProfileField = <T extends FieldValues>({
     defaultValues: { [fieldName]: value } as any,
   });
 
-  const startEditing = () => {
+  const startEditing = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setIsEditing(true);
     setTimeout(() => setFocus(fieldName), 0);
   };
