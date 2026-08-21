@@ -19,7 +19,7 @@ export const ProfileAttributesUpload = () => {
         value={user?.name ?? ""}
         fieldName="name"
         schema={nameSchema}
-        onSave={() => updateUser({ name })}
+        onSave={(value) => updateUser({ name: value })}
         isSaving={isUpdatingUser}
       />
       <EditableProfileField
@@ -27,7 +27,7 @@ export const ProfileAttributesUpload = () => {
         value={user?.username ?? ""}
         fieldName="username"
         schema={usernameSchema}
-        onSave={() => updateUser({ username })}
+        onSave={(value) => updateUser({ username: value })}
         isSaving={isUpdatingUser}
       />
     </div>

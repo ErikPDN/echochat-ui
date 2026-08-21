@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Pencil } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { FieldValues, Path, useForm } from "react-hook-form";
-import { ZodType } from "zod/v4";
+import { ZodType } from "zod";
 
 interface EditableProfileFieldProps<T extends FieldValues> {
   icon: ReactNode;
   value: string;
   fieldName: Path<T>;
-  schema: ZodType<T>;
+  schema: ZodType<T, T>;
   onSave: (value: string) => void;
   isSaving: boolean;
 }
@@ -22,6 +22,11 @@ export const EditableProfileField = <T extends FieldValues>({
   isSaving,
 }: EditableProfileFieldProps<T>) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    console.log("fieldName changed:", fieldName);
+  }, [fieldName]);
+
   const {
     register,
     handleSubmit,
@@ -56,14 +61,22 @@ export const EditableProfileField = <T extends FieldValues>({
         {...register(fieldName)}
         readOnly={!isEditing}
         onKeyDown={(e) => e.key === "Escape" && cancelEditing()}
-        className="w-full border-b-2 border-transparent border-b-card-border mx-6 px-3 py-2 pl-8 focus:outline-none focus:border-b-primary transition-colors duration-150"
+        className="w-full text-white border-b-2 border-transparent border-b-card-border mx-6 px-3 py-2 pl-8 focus:outline-none focus:border-b-primary transition-colors duration-150"
       />
       {isEditing ? (
-        <button type="submit" disabled={isSaving} className="cursor-pointer">
+        <button
+          type="submit"
+          disabled={isSaving}
+          className="absolute flex items-center justify-center right-6 top-1/2 -translate-y-1/2 h-8 w-8 p-2 rounded-full hover:bg-white/10 cursor-pointer"
+        >
           <Check className="h-4 w-4" />
         </button>
       ) : (
-        <button type="button" onClick={startEditing} className="cursor-pointer">
+        <button
+          type="button"
+          onClick={startEditing}
+          className="absolute flex items-center justify-center right-6 top-1/2 -translate-y-1/2 h-8 w-8 p-2 rounded-full hover:bg-white/10 cursor-pointer"
+        >
           <Pencil className="h-4 w-4" />
         </button>
       )}
