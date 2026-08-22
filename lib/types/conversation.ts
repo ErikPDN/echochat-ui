@@ -13,7 +13,7 @@ export interface Conversation {
   type: ConversationType;
   name: string;
   avatarColor: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   lastMessage?: string;
   time?: string;
   unreadCount?: number;
