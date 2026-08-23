@@ -7,7 +7,7 @@ interface ConversationListItemProps {
   lastMessage?: string;
   time?: string;
   avatarColor: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   unreadCount?: number;
   isActive?: boolean;
   onClick: () => void;

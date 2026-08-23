@@ -2,24 +2,36 @@
 
 import { User } from "@/lib/types/user";
 import { LogOut } from "lucide-react";
+import { Avatar } from "../ui/Avatar";
 
 interface SidebarFooterProps {
   user: User | null;
   setIsLogoutDialogOpen: (open: boolean) => void;
+  onProfileClick: () => void;
 }
 
 export const SidebarFooter = ({
   user,
   setIsLogoutDialogOpen,
+  onProfileClick,
 }: SidebarFooterProps) => {
   return (
     <div className="w-full border border-t border-card-border p-3 flex items-center justify-between">
       <div className="flex items-center justify-center gap-2">
-        <div className="h-8 w-8 rounded-lg bg-primary text-white flex items-center justify-center font-semibold shrink-0">
-          {user?.name.charAt(0).toUpperCase()}
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-medium">{user?.username}</div>
+        <button
+          type="button"
+          onClick={onProfileClick}
+          className="flex cursor-pointer"
+        >
+          <Avatar
+            name={user?.name ?? "Unknown"}
+            avatarColor="#6366f1"
+            avatarUrl={user?.avatarUrl}
+            size={32}
+          />
+        </button>
+        <div className="flex flex-col mt-1.5">
+          <div className="text-xs font-medium">{user?.username}</div>
           <div className="text-xs text-gray-500">Online</div>
         </div>
       </div>

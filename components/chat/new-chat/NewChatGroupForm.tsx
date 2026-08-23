@@ -9,10 +9,16 @@ import {
   conversationGroupFormSchema,
 } from "@/lib/schemas/conversation";
 import { Camera, Users } from "lucide-react";
+import { ChangeEvent, useRef, useState } from "react";
+import Image from "next/image";
 
 interface NewChatGroupFormProps {
   onBackClick: () => void;
-  onCreateGroupConversation: (groupName: string, memberIds: string[]) => void;
+  onCreateGroupConversation: (
+    groupName: string,
+    memberIds: string[],
+    file?: File,
+  ) => void;
   isCreating?: boolean;
   memberIds?: string[];
 }
@@ -23,7 +29,10 @@ export const NewChatGroupForm = ({
   isCreating,
   memberIds,
 }: NewChatGroupFormProps) => {
+  const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const {
+    setValue,
     handleSubmit,
     register,
     formState: { errors },
@@ -32,7 +41,20 @@ export const NewChatGroupForm = ({
   });
 
   const onSubmit = ({ groupName }: ConversationGroupFormSchema) => {
-    onCreateGroupConversation(groupName, memberIds ?? []);
+    onCreateGroupConversation(groupName, memberIds ?? [], file ?? undefined);
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue("file", file, { shouldValidate: true });
+      setFile(file);
+    }
+    e.target.value = "";
   };
 
   return (
@@ -42,13 +64,33 @@ export const NewChatGroupForm = ({
     >
       <PanelHeader onBackClick={onBackClick} title="New Group Chat" />
 
-      {/* TODO: Add image upload functionality */}
       <button
         type="button"
-        onClick={() => {}}
+        onClick={handleUploadClick}
         className="relative flex h-24 w-24 mx-auto items-center justify-center rounded-full bg-primary cursor-pointer"
       >
-        <Users className="h-10 w-10" />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/jpg,image/webp"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        {file ? (
+          <Image
+            src={URL.createObjectURL(file)}
+            alt="Uploaded"
+            className="h-full w-full rounded-full object-cover"
+            unoptimized
+            loading="eager"
+            width={96}
+            height={96}
+          />
+        ) : (
+          <div className="flex items-center justify-center">
+            <Users className="h-10 w-10 text-white" />
+          </div>
+        )}
         <div className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-gray-300 cursor-pointer">
           <Camera className="h-4 w-4 text-zinc-900" />
         </div>
@@ -73,7 +115,7 @@ export const NewChatGroupForm = ({
           type="submit"
           text="Create"
           isLoading={isCreating}
-          disabledCondition={isCreating || !memberIds || memberIds.length === 0}
+          disabledCondition={isCreating || !memberIds}
         />
       </div>
     </form>

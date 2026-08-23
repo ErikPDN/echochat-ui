@@ -29,10 +29,16 @@ export const mapConversationResponseToConversation = (
     })),
     type: dto.type,
     name,
+    avatarUrl:
+      dto.type === ConversationType.GROUP
+        ? dto.avatarUrl || null
+        : otherMember?.avatarUrl || null,
     avatarColor: stringToColor(
       dto.type === ConversationType.GROUP
         ? dto.name || dto.id
         : otherMember?.userId || "",
     ),
+    createdAt: new Date(dto.createdAt).toISOString(),
+    updatedAt: new Date(dto.updatedAt).toISOString(),
   };
 };

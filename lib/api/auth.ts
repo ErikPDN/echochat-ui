@@ -1,7 +1,10 @@
 import { LoginSchema, SignupSchema } from "../schemas/auth";
 import { AuthResponse } from "../types/auth-response";
 import { PublicUserResponse } from "../types/public-user.response";
+import { UpdateAvatarResponse } from "../types/update-avatar.response";
+import { UpdateAvatarRequest } from "../types/update-avatar";
 import { httpClient, refreshAccessToken } from "./http-client";
+import { UpdateUserRequest } from "../types/update-user";
 
 export { refreshAccessToken };
 
@@ -29,5 +32,35 @@ export const findByUsername = async (
   username: string,
 ): Promise<PublicUserResponse> => {
   const response = await httpClient.get(`/auth/users/username/${username}`);
+  return response.data;
+};
+
+export const updateAvatar = async ({
+  file,
+}: UpdateAvatarRequest): Promise<UpdateAvatarResponse> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await httpClient.post<UpdateAvatarResponse>(
+    "/auth/me/avatar",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return response.data;
+};
+
+export const deleteAvatar = async (): Promise<void> => {
+  await httpClient.delete("/auth/me/avatar");
+};
+
+export const updateUserProfile = async (
+  data: UpdateUserRequest,
+): Promise<PublicUserResponse> => {
+  const response = await httpClient.patch<PublicUserResponse>("/auth/me", data);
   return response.data;
 };

@@ -17,13 +17,19 @@ import { useSearch } from "@/lib/hooks/useSearch";
 import { SlidePanel } from "../ui/SlidePanel";
 import { Conversation } from "@/lib/types/conversation";
 import { ConversationType } from "@/lib/types/conversation.response";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { ProfilePanel } from "../chat/profile/ProfilePanel";
 
 export const Sidebar = () => {
   const router = useRouter();
-  const [view, setView] = useState<"conversations" | "new-chat">(
+  const pathname = usePathname();
+  const isProfileRoute = pathname.startsWith("/profile");
+
+  const [view, setView] = useState<"conversations" | "new-chat" | "profile">(
     "conversations",
   );
+  const activeView = isProfileRoute ? "profile" : view;
+
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const { mutate: logout, isPending } = useLogoutMutation();
@@ -52,10 +58,15 @@ export const Sidebar = () => {
     router.push(`/chat/${conversationId}`);
   };
 
+  const handleProfileClick = () => {
+    router.push("/profile/avatar");
+    setDirection("right");
+  };
+
   return (
     <aside className="relative w-96 border-r border-card-border bg-card flex flex-col shrink-0 overflow-hidden">
       <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-        {view === "conversations" ? (
+        {activeView === "conversations" && (
           <SlidePanel key="conversations" direction={direction}>
             <SidebarHeader
               onNewChatClick={() => {
@@ -72,9 +83,11 @@ export const Sidebar = () => {
             <SidebarFooter
               user={user}
               setIsLogoutDialogOpen={setIsLogoutDialogOpen}
+              onProfileClick={handleProfileClick}
             />
           </SlidePanel>
-        ) : (
+        )}
+        {activeView === "new-chat" && (
           <SlidePanel key="new-chat" direction={direction}>
             <NewChatPanel
               onBackClick={() => {
@@ -83,6 +96,17 @@ export const Sidebar = () => {
               }}
               conversations={privateConversations}
               isLoadingConversations={isLoading}
+            />
+          </SlidePanel>
+        )}
+        {activeView === "profile" && (
+          <SlidePanel key="profile" direction={direction}>
+            <ProfilePanel
+              onBackClick={() => {
+                setDirection("left");
+                setView("conversations");
+                router.push("/");
+              }}
             />
           </SlidePanel>
         )}

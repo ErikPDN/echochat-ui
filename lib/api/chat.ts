@@ -16,9 +16,21 @@ export const getConversations = async () => {
 export const createGroupConversation = async (
   data: ConversationGroupSchema,
 ) => {
+  const formData = new FormData();
+  formData.append("groupName", data.groupName);
+  data.memberIds.forEach((memberId) => {
+    formData.append("memberIds", memberId);
+  });
+  if (data.file) formData.append("file", data.file);
+
   const response = await httpClient.post<ConversationResponse>(
     "/conversations/group",
-    data,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
 
   return response.data;
