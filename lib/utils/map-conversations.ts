@@ -38,5 +38,7 @@ export const mapConversationResponseToConversation = (
         ? dto.name || dto.id
         : otherMember?.userId || "",
     ),
+    createdAt: new Date(dto.createdAt).toISOString(),
+    updatedAt: new Date(dto.updatedAt).toISOString(),
   };
 };

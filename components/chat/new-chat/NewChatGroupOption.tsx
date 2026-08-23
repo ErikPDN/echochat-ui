@@ -13,7 +13,11 @@ import { useSearch } from "@/lib/hooks/useSearch";
 
 interface NewChatGroupOptionProps {
   onBackClick: () => void;
-  onCreateGroupConversation: (groupName: string, members: string[]) => void;
+  onCreateGroupConversation: (
+    groupName: string,
+    members: string[],
+    file?: File,
+  ) => void;
   contacts?: Contact[];
   isCreating: boolean;
   isLoadingContacts?: boolean;

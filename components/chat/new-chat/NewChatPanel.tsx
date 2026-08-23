@@ -61,9 +61,10 @@ export const NewChatPanel = ({
   const handleCreateGroupConversation = (
     groupName: string,
     memberIds: string[],
+    file?: File,
   ) => {
     createGroupConversation(
-      { groupName, memberIds },
+      { groupName, memberIds, file },
       {
         onSuccess: () => {
           onBackClick();

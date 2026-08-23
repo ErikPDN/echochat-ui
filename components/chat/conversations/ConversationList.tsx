@@ -19,10 +19,16 @@ export const ConversationList = ({
     return <ConversationListSkeleton />;
   }
 
+  const sortedConversations = conversations?.sort((a, b) => {
+    const createdAtA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const createdAtB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return createdAtB - createdAtA;
+  });
+
   return (
     <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin">
       <ul className="flex flex-col gap-2 p-4">
-        {conversations?.map((conversation) => (
+        {sortedConversations?.map((conversation) => (
           <li key={conversation.id}>
             <ConversationListItem
               name={conversation.name}

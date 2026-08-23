@@ -19,4 +19,6 @@ export interface Conversation {
   unreadCount?: number;
   isActive?: boolean;
   members: ConversationMember[];
+  createdAt: string;
+  updatedAt: string;
 }
