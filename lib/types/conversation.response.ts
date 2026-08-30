@@ -1,9 +1,5 @@
+import { ConversationType } from "../enums/conversation-type";
 import { ConversationMemberResponse } from "./conversation-member-response";
-
-export enum ConversationType {
-  PRIVATE = "private",
-  GROUP = "group",
-}
 
 export interface ConversationResponse {
   id: string;

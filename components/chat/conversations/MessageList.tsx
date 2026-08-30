@@ -1,7 +1,43 @@
+import { Message } from "@/lib/types/message";
+import { MessageListSkeleton } from "./MessageListSkeleton";
+import { MessageListItem } from "./MessageListItem";
+
 interface MessageListProps {
   isMessageListLoading?: boolean;
+  messages?: Message[];
 }
 
-export const MessageList = ({ isMessageListLoading }: MessageListProps) => {
-  return <></>;
+export const MessageList = ({
+  isMessageListLoading,
+  messages,
+}: MessageListProps) => {
+  return (
+    <div className="flex-1 overflow-auto p-4">
+      {isMessageListLoading ? (
+        <MessageListSkeleton />
+      ) : messages && messages.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-full">
+          <p className="text-sm text-gray-500">
+            No messages yet. Start a conversation!
+          </p>
+        </div>
+      ) : (
+        <ul className="flex flex-col gap-2 scrollbar-thin">
+          {messages?.map((message) => (
+            <li key={message.id} className="mb-2">
+              <MessageListItem
+                username={message.senderUsername}
+                avatarUrl={message.senderAvatarUrl}
+                content={message.content}
+                contentType={message.contentType}
+                fileIds={message.fileIds}
+                createdAt={message.createdAt}
+                updatedAt={message.updatedAt}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };

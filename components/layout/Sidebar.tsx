@@ -16,9 +16,9 @@ import { AnimatePresence } from "framer-motion";
 import { useSearch } from "@/lib/hooks/useSearch";
 import { SlidePanel } from "../ui/SlidePanel";
 import { Conversation } from "@/lib/types/conversation";
-import { ConversationType } from "@/lib/types/conversation.response";
 import { usePathname, useRouter } from "next/navigation";
 import { ProfilePanel } from "../chat/profile/ProfilePanel";
+import { ConversationType } from "@/lib/enums/conversation-type";
 
 export const Sidebar = () => {
   const router = useRouter();

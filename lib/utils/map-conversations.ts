@@ -1,8 +1,6 @@
+import { ConversationType } from "../enums/conversation-type";
 import { Conversation } from "../types/conversation";
-import {
-  ConversationResponse,
-  ConversationType,
-} from "../types/conversation.response";
+import { ConversationResponse } from "../types/conversation.response";
 import { stringToColor } from "./string-to-color";
 
 export const mapConversationResponseToConversation = (

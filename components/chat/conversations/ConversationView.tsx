@@ -6,6 +6,7 @@ import { useAuthStore } from "@/lib/store/auth-store";
 import { mapConversationResponseToConversation } from "@/lib/utils/map-conversations";
 import { MessageList } from "./MessageList";
 import { useGetMessagesQuery } from "@/lib/hooks/chat/useGetMessagesQuery";
+import { MessageComposer } from "./MessageComposer";
 
 interface ChatConversationViewProps {
   conversationId: string;
@@ -38,7 +39,11 @@ export const ChatConversationView = ({
         conversation={conversation}
         isHeaderLoading={isConversationsLoading}
       />
-      <MessageList isMessageListLoading={isMessagesLoading} />
+      <MessageList
+        messages={messages}
+        isMessageListLoading={isMessagesLoading}
+      />
+      <MessageComposer />
     </div>
   );
 };
