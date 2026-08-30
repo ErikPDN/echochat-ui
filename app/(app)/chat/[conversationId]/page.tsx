@@ -1,3 +1,5 @@
+import { ChatConversationView } from "@/components/chat/conversations/ConversationView";
+
 interface ChatPageProps {
   params: Promise<{ conversationId: string }>;
 }
@@ -5,11 +7,5 @@ interface ChatPageProps {
 export default async function ChatPage({ params }: ChatPageProps) {
   const { conversationId } = await params;
 
-  return (
-    <div className="flex min-h-screen items-center justify-center text-gray-500 text-sm">
-      <h2 className="text-lg font-bold text-gray-500">
-        Conversation: {conversationId}
-      </h2>
-    </div>
-  );
+  return <ChatConversationView conversationId={conversationId} />;
 }

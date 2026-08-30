@@ -13,6 +13,11 @@ export const getConversations = async () => {
   return response.data;
 };
 
+export const getMessages = async (conversationId: string) => {
+  const response = await httpClient.get(`messages/${conversationId}`);
+  return response.data;
+};
+
 export const createGroupConversation = async (
   data: ConversationGroupSchema,
 ) => {
