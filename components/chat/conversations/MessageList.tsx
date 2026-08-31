@@ -23,9 +23,10 @@ export const MessageList = ({
         </div>
       ) : (
         <ul className="flex flex-col gap-1.5 scrollbar-thin">
-          {messages?.map((message) => (
+          {messages?.map((message, index) => (
             <li key={message.messageId}>
               <MessageListItem
+                messageIndex={index}
                 messageId={message.messageId}
                 senderId={message.senderId}
                 username={message.senderUsername}
@@ -34,6 +35,9 @@ export const MessageList = ({
                 contentType={message.contentType}
                 fileIds={message.fileIds}
                 createdAt={message.createdAt}
+                previousCreatedAt={
+                  index > 0 ? messages[index - 1].createdAt : undefined
+                }
                 updatedAt={message.updatedAt}
               />
             </li>

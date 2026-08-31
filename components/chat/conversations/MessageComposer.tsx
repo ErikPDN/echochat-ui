@@ -4,6 +4,7 @@ import { ContentType } from "@/lib/enums/content-type.enum";
 import { useSendMessageMutation } from "@/lib/hooks/chat/useSendMessageMutation";
 import { Paperclip, Send } from "lucide-react";
 import { useState } from "react";
+import { KeyboardEvent } from "react";
 
 interface MessageComposerProps {
   conversationId: string;
@@ -25,6 +26,13 @@ export const MessageComposer = ({ conversationId }: MessageComposerProps) => {
     setMessage("");
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <footer className="sticky bottom-0 flex h-12 z-50 rounded-full bg-card p-2 mt-6 mb-4 mx-3">
       <div className="flex items-center justify-between w-full">
@@ -37,7 +45,9 @@ export const MessageComposer = ({ conversationId }: MessageComposerProps) => {
           </button>
 
           <input
+            value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Type a message..."
             className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
           />
