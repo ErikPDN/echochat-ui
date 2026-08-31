@@ -4,6 +4,7 @@ import {
 } from "../schemas/conversation";
 import { AddMemberToConversationRequest } from "../types/add-member-to-conversation";
 import { ConversationResponse } from "../types/conversation.response";
+import { SendMessageRequest } from "../types/send-message";
 import { httpClient } from "./http-client";
 
 export const getConversations = async () => {
@@ -14,7 +15,9 @@ export const getConversations = async () => {
 };
 
 export const getMessages = async (conversationId: string) => {
-  const response = await httpClient.get(`messages/${conversationId}`);
+  const response = await httpClient.get(
+    `conversations/${conversationId}/messages`,
+  );
   return response.data;
 };
 
@@ -60,6 +63,15 @@ export const addMemberToConversation = async (
   const response = await httpClient.post<ConversationResponse>(
     `/conversations/${conversationId}/members`,
     { memberId },
+  );
+  return response.data;
+};
+
+export const sendMessage = async (data: SendMessageRequest) => {
+  const { conversationId, content, contentType, fileIds } = data;
+  const response = await httpClient.post(
+    `/conversations/${conversationId}/messages`,
+    { content, contentType, fileIds },
   );
   return response.data;
 };

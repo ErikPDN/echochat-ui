@@ -22,10 +22,12 @@ export const MessageList = ({
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-2 scrollbar-thin">
+        <ul className="flex flex-col gap-1.5 scrollbar-thin">
           {messages?.map((message) => (
-            <li key={message.id} className="mb-2">
+            <li key={message.messageId}>
               <MessageListItem
+                messageId={message.messageId}
+                senderId={message.senderId}
                 username={message.senderUsername}
                 avatarUrl={message.senderAvatarUrl}
                 content={message.content}

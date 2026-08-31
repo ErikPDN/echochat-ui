@@ -12,6 +12,7 @@
   --primary-active: #4338ca;
   --muted: #1c1c20;
   --muted-hover: #27272e;
+  --message-card: #202c33;
 }
 
 @theme inline {
@@ -27,6 +28,7 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
   --color-muted: var(--muted);
+  --color-message-card: var(--message-card);
 }
 
 body {

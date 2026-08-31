@@ -34,7 +34,7 @@ export const ChatConversationView = ({
   if (isConversationsLoading) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col min-h-screen text-gray-500 text-sm">
+    <div className="flex flex-col h-screen text-gray-500 text-sm">
       <ConversationHeader
         conversation={conversation}
         isHeaderLoading={isConversationsLoading}
@@ -43,7 +43,7 @@ export const ChatConversationView = ({
         messages={messages}
         isMessageListLoading={isMessagesLoading}
       />
-      <MessageComposer />
+      <MessageComposer conversationId={conversationId} />
     </div>
   );
 };

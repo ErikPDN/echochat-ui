@@ -2,7 +2,7 @@ import { ContentType } from "../enums/content-type.enum";
 import { Recipient } from "./recipient";
 
 export interface Message {
-  id: string;
+  messageId: string;
   conversationId: string;
   senderId: string;
   senderName: string;
