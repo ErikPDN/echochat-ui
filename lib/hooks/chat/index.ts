@@ -2,3 +2,6 @@ export * from "@/lib/hooks/chat/useCreateGroupConversationMutation";
 export * from "@/lib/hooks/chat/useCreatePrivateConversationMutation";
 export * from "@/lib/hooks/chat/useAddMemberToConversationMutation";
 export * from "@/lib/hooks/chat/useGetConversationsQuery";
+export * from "@/lib/hooks/chat/useContacts";
+export * from "@/lib/hooks/chat/useGetMessagesQuery";
+export * from "@/lib/hooks/chat/useSendMessageMutation";

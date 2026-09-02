@@ -19,6 +19,7 @@ import { Conversation } from "@/lib/types/conversation";
 import { usePathname, useRouter } from "next/navigation";
 import { ProfilePanel } from "../chat/profile/ProfilePanel";
 import { ConversationType } from "@/lib/enums/conversation-type";
+import { useGetMessagesSummary } from "@/lib/hooks/chat/useGetMessagesSummary";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -34,11 +35,18 @@ export const Sidebar = () => {
   const [direction, setDirection] = useState<"left" | "right">("right");
   const { mutate: logout, isPending } = useLogoutMutation();
   const { data: conversations, isLoading } = useGetConversationsQuery();
+  const { data: messagesSummary } = useGetMessagesSummary(
+    conversations?.map((conversation) => conversation.id) ?? [],
+  );
   const user = useAuthStore((state) => state.user);
   const { onSearch, filteredItems: filteredConversations } =
     useSearch<Conversation>(
       conversations?.map((conversation) =>
-        mapConversationResponseToConversation(conversation, user?.id ?? ""),
+        mapConversationResponseToConversation(
+          conversation,
+          user?.id ?? "",
+          messagesSummary,
+        ),
       ) ?? [],
     );
 

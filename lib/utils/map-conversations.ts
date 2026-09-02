@@ -1,11 +1,13 @@
 import { ConversationType } from "../enums/conversation-type";
 import { Conversation } from "../types/conversation";
+import { ConversationSummaryResponse } from "../types/conversation-summary.response";
 import { ConversationResponse } from "../types/conversation.response";
 import { stringToColor } from "./string-to-color";
 
 export const mapConversationResponseToConversation = (
   dto: ConversationResponse,
   currentUserId: string,
+  summary?: ConversationSummaryResponse,
 ): Conversation => {
   const otherMember = dto.members.find(
     (member) => member.userId !== currentUserId,
@@ -36,6 +38,11 @@ export const mapConversationResponseToConversation = (
         ? dto.name || dto.id
         : otherMember?.userId || "",
     ),
+    lastMessage: summary?.lastMessage?.content,
+    unreadCount: summary?.unreadCount ?? 0,
+    time: summary?.lastMessage?.createdAt
+      ? new Date(summary.lastMessage.createdAt).toISOString()
+      : undefined,
     createdAt: new Date(dto.createdAt).toISOString(),
     updatedAt: new Date(dto.updatedAt).toISOString(),
   };

@@ -3,6 +3,7 @@ import {
   ConversationPrivateSchema,
 } from "../schemas/conversation";
 import { AddMemberToConversationRequest } from "../types/add-member-to-conversation";
+import { ConversationSummaryResponse } from "../types/conversation-summary.response";
 import { ConversationResponse } from "../types/conversation.response";
 import { SendMessageRequest } from "../types/send-message";
 import { httpClient } from "./http-client";
@@ -72,6 +73,16 @@ export const sendMessage = async (data: SendMessageRequest) => {
   const response = await httpClient.post(
     `/conversations/${conversationId}/messages`,
     { content, contentType, fileIds },
+  );
+  return response.data;
+};
+
+export const getMessagesSummary = async (conversationIds: string[]) => {
+  const response = await httpClient.get<ConversationSummaryResponse[]>(
+    "conversations/messages/summary",
+    {
+      params: { conversationIds: conversationIds.join(",") },
+    },
   );
   return response.data;
 };
