@@ -40,7 +40,9 @@ export const mapConversationResponseToConversation = (
         : otherMember?.userId || "",
     ),
     senderName: summary?.lastMessage?.senderName,
-    lastMessage: summary?.lastMessage?.content,
+    senderId: summary?.lastMessage?.senderId,
+    lastMessageContent: summary?.lastMessage?.content,
+    lastMessageAt: summary?.lastMessage?.createdAt,
     unreadCount: summary?.unreadCount ?? 0,
     time: summary?.lastMessage?.createdAt
       ? formatConversationTime(new Date(summary.lastMessage.createdAt))

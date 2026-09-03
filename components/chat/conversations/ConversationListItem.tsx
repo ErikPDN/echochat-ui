@@ -1,30 +1,39 @@
 "use client";
 
 import { Avatar } from "@/components/ui/Avatar";
+import { ConversationType } from "@/lib/enums/conversation-type";
+import { useAuthStore } from "@/lib/store/auth-store";
+import { LastMessageSummary } from "@/lib/types/conversation-summary.response";
 
 interface ConversationListItemProps {
   name: string;
-  lastMessage?: string;
+  lastMessageContent?: string;
   time?: string;
   avatarColor: string;
   avatarUrl?: string | null;
   senderName?: string;
+  senderId?: string;
   unreadCount?: number;
   isActive?: boolean;
   onClick: () => void;
+  type: ConversationType;
 }
 
 export const ConversationListItem = ({
   name,
-  lastMessage,
+  lastMessageContent,
   time,
   avatarColor,
   avatarUrl,
   senderName,
+  senderId,
   unreadCount,
   isActive,
+  type,
   onClick,
 }: ConversationListItemProps) => {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <button
       type="button"
@@ -43,9 +52,13 @@ export const ConversationListItem = ({
 
         <div className="flex justify-between items-center gap-1/2">
           <p className="text-[13px] font-medium text-gray-500 truncate">
-            {senderName ? `${senderName}: ` : ""}{" "}
-            {lastMessage ? lastMessage : "No messages yet"}
+            {!lastMessageContent
+              ? "No messages yet"
+              : type !== ConversationType.GROUP
+                ? lastMessageContent
+                : `${senderId === user?.id ? "You" : senderName}: ${lastMessageContent}`}
           </p>
+
           {!!unreadCount && (
             <span className="h-5 w-5 rounded-full bg-primary text-[10px] flex items-center justify-center shrink-0">
               {unreadCount}

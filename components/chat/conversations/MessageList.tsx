@@ -1,13 +1,16 @@
 import { Message } from "@/lib/types/message";
 import { MessageListSkeleton } from "./MessageListSkeleton";
 import { MessageListItem } from "./MessageListItem";
+import { ConversationType } from "@/lib/enums/conversation-type";
 
 interface MessageListProps {
   isMessageListLoading?: boolean;
   messages?: Message[];
+  conversationType?: ConversationType;
 }
 
 export const MessageList = ({
+  conversationType,
   isMessageListLoading,
   messages,
 }: MessageListProps) => {
@@ -26,6 +29,7 @@ export const MessageList = ({
           {messages?.map((message, index) => (
             <li key={message.messageId}>
               <MessageListItem
+                conversationType={conversationType}
                 messageIndex={index}
                 messageId={message.messageId}
                 senderId={message.senderId}

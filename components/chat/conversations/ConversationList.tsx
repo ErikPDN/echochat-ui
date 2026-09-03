@@ -21,10 +21,11 @@ export const ConversationList = ({
     return <ConversationListSkeleton />;
   }
 
-  const sortedConversations = conversations?.sort((a, b) => {
-    const createdAtA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-    const createdAtB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-    return createdAtB - createdAtA;
+  const sortedConversations = [...(conversations ?? [])].sort((a, b) => {
+    const tA = new Date(a.lastMessageAt ?? a.createdAt).getTime() || 0;
+    const tB = new Date(b.lastMessageAt ?? b.createdAt).getTime() || 0;
+    if (tB !== tA) return tB - tA;
+    return a.id.localeCompare(b.id);
   });
 
   return (
@@ -33,13 +34,15 @@ export const ConversationList = ({
         {sortedConversations?.map((conversation) => (
           <li key={conversation.id}>
             <ConversationListItem
+              type={conversation.type}
               name={conversation.name}
-              lastMessage={conversation.lastMessage}
+              lastMessageContent={conversation.lastMessageContent}
               time={conversation.time}
               avatarColor={conversation.avatarColor}
               avatarUrl={conversation.avatarUrl}
               unreadCount={conversation.unreadCount}
               isActive={activeConversationId === conversation.id}
+              senderId={conversation.senderId}
               senderName={conversation.senderName}
               onClick={() => onSelectConversation(conversation.id)}
             />

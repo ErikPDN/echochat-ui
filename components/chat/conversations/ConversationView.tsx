@@ -40,6 +40,7 @@ export const ChatConversationView = ({
         isHeaderLoading={isConversationsLoading}
       />
       <MessageList
+        conversationType={conversation?.type}
         messages={messages}
         isMessageListLoading={isMessagesLoading}
       />

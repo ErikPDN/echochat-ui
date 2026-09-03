@@ -1,10 +1,12 @@
 "use client";
 
 import { ContentType } from "@/lib/enums/content-type.enum";
+import { ConversationType } from "@/lib/enums/conversation-type";
 import { useAuthStore } from "@/lib/store/auth-store";
 import { formatMessageDate, getTimeString } from "@/lib/utils/date-formatter";
 
 interface MessageListItemProps {
+  conversationType?: ConversationType;
   messageIndex: number;
   messageId: string;
   senderId: string;
@@ -19,6 +21,7 @@ interface MessageListItemProps {
 }
 
 export const MessageListItem = ({
+  conversationType,
   messageIndex,
   messageId,
   senderId,
@@ -38,6 +41,7 @@ export const MessageListItem = ({
     ? formatMessageDate(new Date(previousCreatedAt))
     : null;
   const showDateSeparator = currentMessageDate !== previousMessageDate;
+  const isPrivateConversation = conversationType === ConversationType.PRIVATE;
 
   return (
     <div
@@ -58,7 +62,7 @@ export const MessageListItem = ({
       >
         {/* TODO: Colocar cor no username */}
         <div className="flex flex-col">
-          {!isMine && (
+          {!isPrivateConversation && (
             <span className="text-sm text-white font-medium">{username}</span>
           )}
           <p className="text-sm text-white items-start">{content}</p>
