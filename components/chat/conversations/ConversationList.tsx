@@ -8,12 +8,14 @@ interface ConversationListProps {
   conversations?: Conversation[];
   isLoading?: boolean;
   onSelectConversation: (conversationId: string) => void;
+  activeConversationId?: string;
 }
 
 export const ConversationList = ({
   conversations,
   isLoading,
   onSelectConversation,
+  activeConversationId,
 }: ConversationListProps) => {
   if (isLoading) {
     return <ConversationListSkeleton />;
@@ -37,7 +39,8 @@ export const ConversationList = ({
               avatarColor={conversation.avatarColor}
               avatarUrl={conversation.avatarUrl}
               unreadCount={conversation.unreadCount}
-              isActive={conversation.isActive}
+              isActive={activeConversationId === conversation.id}
+              senderName={conversation.senderName}
               onClick={() => onSelectConversation(conversation.id)}
             />
           </li>

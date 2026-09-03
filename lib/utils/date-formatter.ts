@@ -47,3 +47,36 @@ export const formatMessageDate = (date: Date): string => {
     year: "numeric",
   });
 };
+
+export const formatConversationTime = (date: Date): string => {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const messageDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+
+  if (messageDate.getTime() === today.getTime()) {
+    return date.toLocaleString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  }
+
+  if (messageDate.getTime() === yesterday.getTime()) {
+    return "Yesterday";
+  }
+
+  const sevenDaysAgo = new Date(today);
+  sevenDaysAgo.setDate(today.getDate() - 7);
+
+  if (messageDate.getTime() > sevenDaysAgo.getTime()) {
+    return date.toLocaleString("pt-BR", { weekday: "long" });
+  }
+
+  return date.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};

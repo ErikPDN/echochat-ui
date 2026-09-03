@@ -17,7 +17,7 @@ export interface Conversation {
   lastMessage?: string;
   time?: string;
   unreadCount?: number;
-  isActive?: boolean;
+  senderName?: string;
   members: ConversationMember[];
   createdAt: string;
   updatedAt: string;

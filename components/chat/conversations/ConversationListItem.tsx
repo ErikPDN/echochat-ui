@@ -8,6 +8,7 @@ interface ConversationListItemProps {
   time?: string;
   avatarColor: string;
   avatarUrl?: string | null;
+  senderName?: string;
   unreadCount?: number;
   isActive?: boolean;
   onClick: () => void;
@@ -19,6 +20,7 @@ export const ConversationListItem = ({
   time,
   avatarColor,
   avatarUrl,
+  senderName,
   unreadCount,
   isActive,
   onClick,
@@ -40,7 +42,8 @@ export const ConversationListItem = ({
         </div>
 
         <div className="flex justify-between items-center gap-1/2">
-          <p className="text-xs font-medium text-gray-500 truncate">
+          <p className="text-[13px] font-medium text-gray-500 truncate">
+            {senderName ? `${senderName}: ` : ""}{" "}
             {lastMessage ? lastMessage : "No messages yet"}
           </p>
           {!!unreadCount && (

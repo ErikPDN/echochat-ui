@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { SearchBar } from "../ui/SearchBar";
 import { ConversationList } from "../chat/conversations/ConversationList";
@@ -16,10 +16,11 @@ import { AnimatePresence } from "framer-motion";
 import { useSearch } from "@/lib/hooks/useSearch";
 import { SlidePanel } from "../ui/SlidePanel";
 import { Conversation } from "@/lib/types/conversation";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ProfilePanel } from "../chat/profile/ProfilePanel";
 import { ConversationType } from "@/lib/enums/conversation-type";
 import { useGetMessagesSummary } from "@/lib/hooks/chat/useGetMessagesSummary";
+import { ConversationSummaryResponse } from "@/lib/types/conversation-summary.response";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -38,24 +39,39 @@ export const Sidebar = () => {
   const { data: messagesSummary } = useGetMessagesSummary(
     conversations?.map((conversation) => conversation.id) ?? [],
   );
+
   const user = useAuthStore((state) => state.user);
-  const { onSearch, filteredItems: filteredConversations } =
-    useSearch<Conversation>(
+
+  const summaryById = useMemo(() => {
+    const map = new Map<string, ConversationSummaryResponse>();
+    messagesSummary?.forEach((summary) => {
+      map.set(summary.conversationId, summary);
+    });
+    return map;
+  }, [messagesSummary]);
+
+  const mappedSummary = useMemo<Conversation[]>(() => {
+    return (
       conversations?.map((conversation) =>
         mapConversationResponseToConversation(
           conversation,
           user?.id ?? "",
-          messagesSummary,
+          summaryById.get(conversation.id),
         ),
-      ) ?? [],
+      ) ?? []
     );
+  }, [summaryById, conversations, user?.id]);
 
-  const privateConversations =
-    conversations
-      ?.filter((conversation) => conversation.type === ConversationType.PRIVATE)
-      .map((conversation) =>
-        mapConversationResponseToConversation(conversation, user?.id ?? ""),
-      ) ?? [];
+  const { onSearch, filteredItems: filteredConversations } =
+    useSearch<Conversation>(mappedSummary);
+
+  const privateConversations = useMemo(() => {
+    return mappedSummary.filter(
+      (conversation) => conversation.type === ConversationType.PRIVATE,
+    );
+  }, [mappedSummary]);
+
+  const chatParams = useParams<{ conversationId: string }>();
 
   const handleLogout = () => {
     logout();
@@ -84,6 +100,7 @@ export const Sidebar = () => {
             />
             <SearchBar onSearch={onSearch} />
             <ConversationList
+              activeConversationId={chatParams?.conversationId}
               conversations={filteredConversations}
               isLoading={isLoading}
               onSelectConversation={handleSelectConversation}

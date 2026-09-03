@@ -2,6 +2,7 @@ import { ConversationType } from "../enums/conversation-type";
 import { Conversation } from "../types/conversation";
 import { ConversationSummaryResponse } from "../types/conversation-summary.response";
 import { ConversationResponse } from "../types/conversation.response";
+import { formatConversationTime } from "./date-formatter";
 import { stringToColor } from "./string-to-color";
 
 export const mapConversationResponseToConversation = (
@@ -38,10 +39,11 @@ export const mapConversationResponseToConversation = (
         ? dto.name || dto.id
         : otherMember?.userId || "",
     ),
+    senderName: summary?.lastMessage?.senderName,
     lastMessage: summary?.lastMessage?.content,
     unreadCount: summary?.unreadCount ?? 0,
     time: summary?.lastMessage?.createdAt
-      ? new Date(summary.lastMessage.createdAt).toISOString()
+      ? formatConversationTime(new Date(summary.lastMessage.createdAt))
       : undefined,
     createdAt: new Date(dto.createdAt).toISOString(),
     updatedAt: new Date(dto.updatedAt).toISOString(),
