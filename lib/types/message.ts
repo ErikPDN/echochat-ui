@@ -8,6 +8,7 @@ export interface Message {
   senderName: string;
   senderUsername: string;
   senderAvatarUrl?: string | null;
+  nameColor: string;
   recipients: Recipient[];
   content?: string;
   contentType: ContentType;

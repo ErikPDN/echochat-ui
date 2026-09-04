@@ -51,16 +51,16 @@ export const MessageComposer = ({ conversationId }: MessageComposerProps) => {
             placeholder="Type a message..."
             className="flex-1 bg-transparent text-white placeholder-gray-400 focus:outline-none"
           />
-        </div>
 
-        {message && message.trim() !== "" && (
-          <button
-            onClick={handleSendMessage}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-primary hover:bg-primary/80 cursor-pointer"
-          >
-            <Send className="text-white w-5 h-5" />
-          </button>
-        )}
+          {message && message.trim() !== "" && (
+            <button
+              onClick={handleSendMessage}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-primary hover:bg-primary/80 cursor-pointer"
+            >
+              <Send className="text-white w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
     </footer>
   );

@@ -1,7 +1,10 @@
+"use client";
+
 import { Message } from "@/lib/types/message";
 import { MessageListSkeleton } from "./MessageListSkeleton";
 import { MessageListItem } from "./MessageListItem";
 import { ConversationType } from "@/lib/enums/conversation-type";
+import { stringToColor } from "@/lib/utils/string-to-color";
 
 interface MessageListProps {
   isMessageListLoading?: boolean;
@@ -26,26 +29,31 @@ export const MessageList = ({
         </div>
       ) : (
         <ul className="flex flex-col gap-1.5 scrollbar-thin">
-          {messages?.map((message, index) => (
-            <li key={message.messageId}>
-              <MessageListItem
-                conversationType={conversationType}
-                messageIndex={index}
-                messageId={message.messageId}
-                senderId={message.senderId}
-                username={message.senderUsername}
-                avatarUrl={message.senderAvatarUrl}
-                content={message.content}
-                contentType={message.contentType}
-                fileIds={message.fileIds}
-                createdAt={message.createdAt}
-                previousCreatedAt={
-                  index > 0 ? messages[index - 1].createdAt : undefined
-                }
-                updatedAt={message.updatedAt}
-              />
-            </li>
-          ))}
+          {messages?.map((message, index) => {
+            const userNameColor = stringToColor(message.senderId);
+
+            return (
+              <li key={message.messageId}>
+                <MessageListItem
+                  conversationType={conversationType}
+                  messageIndex={index}
+                  messageId={message.messageId}
+                  senderId={message.senderId}
+                  senderColor={userNameColor}
+                  username={message.senderUsername}
+                  avatarUrl={message.senderAvatarUrl}
+                  content={message.content}
+                  contentType={message.contentType}
+                  fileIds={message.fileIds}
+                  createdAt={message.createdAt}
+                  previousCreatedAt={
+                    index > 0 ? messages[index - 1].createdAt : undefined
+                  }
+                  updatedAt={message.updatedAt}
+                />
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

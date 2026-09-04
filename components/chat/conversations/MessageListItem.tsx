@@ -18,6 +18,7 @@ interface MessageListItemProps {
   createdAt: Date;
   previousCreatedAt?: Date;
   updatedAt?: Date;
+  senderColor: string;
 }
 
 export const MessageListItem = ({
@@ -33,6 +34,7 @@ export const MessageListItem = ({
   createdAt,
   previousCreatedAt,
   updatedAt,
+  senderColor,
 }: MessageListItemProps) => {
   const user = useAuthStore((state) => state.user);
   const isMine = senderId === user?.id;
@@ -49,7 +51,7 @@ export const MessageListItem = ({
       className={`flex flex-col ${isMine ? "items-end" : "items-start"}`}
     >
       {showDateSeparator && (
-        <div className="flex justify-center my-2 w-full">
+        <div className="flex justify-center my-3 w-full">
           <span className="text-xs text-zinc-600 font-medium bg-card py-1 px-3 rounded-lg border border-zinc-800">
             {currentMessageDate}
           </span>
@@ -60,12 +62,16 @@ export const MessageListItem = ({
           isMine ? "bg-primary rounded-br-none" : "bg-zinc-800 rounded-bl-none"
         }`}
       >
-        {/* TODO: Colocar cor no username */}
         <div className="flex flex-col">
-          {!isPrivateConversation && (
-            <span className="text-sm text-white font-medium">{username}</span>
+          {!isPrivateConversation && !isMine && (
+            <span
+              className="mb-0.5 text-sm font-medium leading-tight"
+              style={{ color: senderColor }}
+            >
+              {username}
+            </span>
           )}
-          <p className="text-sm text-white items-start">{content}</p>
+          <p className="text-sm text-white">{content}</p>
         </div>
       </div>
 
