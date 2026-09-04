@@ -60,7 +60,7 @@ export const ConversationListItem = ({
           </p>
 
           {!!unreadCount && (
-            <span className="h-5 w-5 rounded-full bg-primary text-[10px] flex items-center justify-center shrink-0">
+            <span className="h-5 w-5 rounded-full bg-primary text-[10px] flex items-center justify-center shrink-0 ml-1">
               {unreadCount}
             </span>
           )}
