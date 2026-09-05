@@ -19,8 +19,9 @@ import { Conversation } from "@/lib/types/conversation";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ProfilePanel } from "../chat/profile/ProfilePanel";
 import { ConversationType } from "@/lib/enums/conversation-type";
-import { useGetMessagesSummary } from "@/lib/hooks/chat/useGetMessagesSummary";
+import { useGetMessagesSummaryQuery } from "@/lib/hooks/chat/useGetMessagesSummaryQuery";
 import { ConversationSummaryResponse } from "@/lib/types/conversation-summary.response";
+import { useReadMessageMutation } from "@/lib/hooks/chat/useReadMessageMutation";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -36,9 +37,11 @@ export const Sidebar = () => {
   const [direction, setDirection] = useState<"left" | "right">("right");
   const { mutate: logout, isPending } = useLogoutMutation();
   const { data: conversations, isLoading } = useGetConversationsQuery();
-  const { data: messagesSummary } = useGetMessagesSummary(
+  const { data: messagesSummary } = useGetMessagesSummaryQuery(
     conversations?.map((conversation) => conversation.id) ?? [],
   );
+
+  const { mutate: markMessagesAsRead } = useReadMessageMutation();
 
   const user = useAuthStore((state) => state.user);
 
@@ -80,6 +83,13 @@ export const Sidebar = () => {
 
   const handleSelectConversation = (conversationId: string) => {
     router.push(`/chat/${conversationId}`);
+    const conversation = mappedSummary.find(
+      (conversation) => conversation.id === conversationId,
+    );
+
+    if (conversation && (conversation.unreadCount ?? 0) > 0) {
+      markMessagesAsRead(conversationId);
+    }
   };
 
   const handleProfileClick = () => {

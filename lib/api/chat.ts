@@ -15,9 +15,19 @@ export const getConversations = async () => {
   return response.data;
 };
 
-export const getMessages = async (conversationId: string) => {
+export const getMessages = async (
+  conversationId: string,
+  limit?: number,
+  before?: string,
+) => {
   const response = await httpClient.get(
     `conversations/${conversationId}/messages`,
+    {
+      params: {
+        limit,
+        before,
+      },
+    },
   );
   return response.data;
 };
@@ -83,6 +93,13 @@ export const getMessagesSummary = async (conversationIds: string[]) => {
     {
       params: { conversationIds: conversationIds.join(",") },
     },
+  );
+  return response.data;
+};
+
+export const markMessagesAsRead = async (conversationId: string) => {
+  const response = await httpClient.patch(
+    `/conversations/${conversationId}/read`,
   );
   return response.data;
 };

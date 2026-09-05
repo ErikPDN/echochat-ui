@@ -12,6 +12,7 @@ interface MessageListProps {
   conversationType?: ConversationType;
 }
 
+// TODO: melhorar barra de scroll e criar skeleton para mensagens
 export const MessageList = ({
   conversationType,
   isMessageListLoading,
