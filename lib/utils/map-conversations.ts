@@ -1,13 +1,14 @@
+import { ConversationType } from "../enums/conversation-type.enum";
 import { Conversation } from "../types/conversation";
-import {
-  ConversationResponse,
-  ConversationType,
-} from "../types/conversation.response";
+import { ConversationSummaryResponse } from "../types/conversation-summary.response";
+import { ConversationResponse } from "../types/conversation.response";
+import { formatConversationTime } from "./date-formatter";
 import { stringToColor } from "./string-to-color";
 
 export const mapConversationResponseToConversation = (
   dto: ConversationResponse,
   currentUserId: string,
+  summary?: ConversationSummaryResponse,
 ): Conversation => {
   const otherMember = dto.members.find(
     (member) => member.userId !== currentUserId,
@@ -38,6 +39,14 @@ export const mapConversationResponseToConversation = (
         ? dto.name || dto.id
         : otherMember?.userId || "",
     ),
+    senderName: summary?.lastMessage?.senderName,
+    senderId: summary?.lastMessage?.senderId,
+    lastMessageContent: summary?.lastMessage?.content,
+    lastMessageAt: summary?.lastMessage?.createdAt,
+    unreadCount: summary?.unreadCount ?? 0,
+    time: summary?.lastMessage?.createdAt
+      ? formatConversationTime(new Date(summary.lastMessage.createdAt))
+      : undefined,
     createdAt: new Date(dto.createdAt).toISOString(),
     updatedAt: new Date(dto.updatedAt).toISOString(),
   };

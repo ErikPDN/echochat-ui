@@ -1,4 +1,4 @@
-import { ConversationType } from "./conversation.response";
+import { ConversationType } from "../enums/conversation-type.enum";
 
 export interface ConversationMember {
   userId: string;
@@ -14,10 +14,12 @@ export interface Conversation {
   name: string;
   avatarColor: string;
   avatarUrl?: string | null;
-  lastMessage?: string;
+  lastMessageContent?: string;
+  lastMessageAt?: Date;
   time?: string;
   unreadCount?: number;
-  isActive?: boolean;
+  senderName?: string;
+  senderId?: string;
   members: ConversationMember[];
   createdAt: string;
   updatedAt: string;

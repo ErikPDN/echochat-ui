@@ -3,13 +3,32 @@ import {
   ConversationPrivateSchema,
 } from "../schemas/conversation";
 import { AddMemberToConversationRequest } from "../types/add-member-to-conversation";
+import { ConversationSummaryResponse } from "../types/conversation-summary.response";
 import { ConversationResponse } from "../types/conversation.response";
+import { SendMessageRequest } from "../types/send-message";
 import { httpClient } from "./http-client";
 
 export const getConversations = async () => {
   const response =
     await httpClient.get<ConversationResponse[]>("/conversations");
 
+  return response.data;
+};
+
+export const getMessages = async (
+  conversationId: string,
+  limit?: number,
+  before?: string,
+) => {
+  const response = await httpClient.get(
+    `conversations/${conversationId}/messages`,
+    {
+      params: {
+        limit,
+        before,
+      },
+    },
+  );
   return response.data;
 };
 
@@ -55,6 +74,32 @@ export const addMemberToConversation = async (
   const response = await httpClient.post<ConversationResponse>(
     `/conversations/${conversationId}/members`,
     { memberId },
+  );
+  return response.data;
+};
+
+export const sendMessage = async (data: SendMessageRequest) => {
+  const { conversationId, content, contentType, fileIds } = data;
+  const response = await httpClient.post(
+    `/conversations/${conversationId}/messages`,
+    { content, contentType, fileIds },
+  );
+  return response.data;
+};
+
+export const getMessagesSummary = async (conversationIds: string[]) => {
+  const response = await httpClient.get<ConversationSummaryResponse[]>(
+    "/conversations/messages/summary",
+    {
+      params: { conversationIds: conversationIds.join(",") },
+    },
+  );
+  return response.data;
+};
+
+export const markMessagesAsRead = async (conversationId: string) => {
+  const response = await httpClient.patch(
+    `/conversations/${conversationId}/read`,
   );
   return response.data;
 };
