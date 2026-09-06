@@ -3,7 +3,6 @@
 import { Avatar } from "@/components/ui/Avatar";
 import { ConversationType } from "@/lib/enums/conversation-type.enum";
 import { useAuthStore } from "@/lib/store/auth-store";
-import { LastMessageSummary } from "@/lib/types/conversation-summary.response";
 
 interface ConversationListItemProps {
   name: string;

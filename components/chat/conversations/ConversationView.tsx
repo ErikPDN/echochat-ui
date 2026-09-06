@@ -54,8 +54,6 @@ export const ChatConversationView = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId, conversation?.unreadCount, markMessagesAsRead]);
 
-  if (isConversationsLoading) return <div>Loading...</div>;
-
   return (
     <div className="flex flex-col h-screen text-gray-500 text-sm">
       <ConversationHeader

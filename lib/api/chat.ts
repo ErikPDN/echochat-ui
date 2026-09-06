@@ -89,7 +89,7 @@ export const sendMessage = async (data: SendMessageRequest) => {
 
 export const getMessagesSummary = async (conversationIds: string[]) => {
   const response = await httpClient.get<ConversationSummaryResponse[]>(
-    "conversations/messages/summary",
+    "/conversations/messages/summary",
     {
       params: { conversationIds: conversationIds.join(",") },
     },

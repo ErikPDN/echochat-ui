@@ -6,7 +6,9 @@ export const useSendMessageMutation = (conversationId: string) => {
 
   return useMutation({
     mutationFn: sendMessage,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["messages", conversationId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["messages", conversationId] });
+      queryClient.invalidateQueries({ queryKey: ["messages-summary"] });
+    },
   });
 };

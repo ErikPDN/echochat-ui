@@ -4,6 +4,7 @@ import { Conversation } from "@/lib/types/conversation";
 import { Avatar } from "../../ui/Avatar";
 import { EllipsisVertical } from "lucide-react";
 import { ConversationHeaderSkeleton } from "./ConversationHeaderSkeleton";
+import { ConversationType } from "@/lib/enums/conversation-type.enum";
 
 interface ConversationHeaderProps {
   conversation?: Conversation;
@@ -31,7 +32,7 @@ export const ConversationHeader = ({
             <span className="text-md font-semibold text-white truncate">
               {name}
             </span>
-            {conversation?.type === "group" && (
+            {conversation?.type === ConversationType.GROUP && (
               <div className="flex gap-1 text-sm text-gray-400 truncate">
                 {members.map((member, i) => (
                   <span key={member.userId}>
