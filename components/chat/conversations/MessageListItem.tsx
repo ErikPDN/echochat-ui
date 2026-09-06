@@ -1,9 +1,11 @@
 "use client";
 
 import { ContentType } from "@/lib/enums/content-type.enum";
-import { ConversationType } from "@/lib/enums/conversation-type";
+import { ConversationType } from "@/lib/enums/conversation-type.enum";
+import { MessageStatus } from "@/lib/enums/message-status.enum";
 import { useAuthStore } from "@/lib/store/auth-store";
 import { formatMessageDate, getTimeString } from "@/lib/utils/date-formatter";
+import { MessageStatusIcon } from "./MessageStatusIcon";
 
 interface MessageListItemProps {
   conversationType?: ConversationType;
@@ -19,6 +21,7 @@ interface MessageListItemProps {
   previousCreatedAt?: Date;
   updatedAt?: Date;
   senderColor: string;
+  messageStatus: MessageStatus;
 }
 
 export const MessageListItem = ({
@@ -35,6 +38,7 @@ export const MessageListItem = ({
   previousCreatedAt,
   updatedAt,
   senderColor,
+  messageStatus,
 }: MessageListItemProps) => {
   const user = useAuthStore((state) => state.user);
   const isMine = senderId === user?.id;
@@ -58,7 +62,7 @@ export const MessageListItem = ({
         </div>
       )}
       <div
-        className={`max-w-md min-w-16 px-3 py-2 rounded-xl ${
+        className={`max-w-md min-w-18 px-3 py-2 rounded-xl ${
           isMine ? "bg-primary rounded-br-none" : "bg-zinc-800 rounded-bl-none"
         }`}
       >
@@ -75,9 +79,12 @@ export const MessageListItem = ({
         </div>
       </div>
 
-      <span className="mt-1 px-1 text-[10px] text-zinc-500">
-        {getTimeString(createdAt)}
-      </span>
+      <div className="flex items-center gap-1">
+        <span className="mt-1 px-1 text-[10px] text-zinc-500">
+          {getTimeString(createdAt)}
+        </span>
+        {isMine && <MessageStatusIcon status={messageStatus} />}
+      </div>
     </div>
   );
 };

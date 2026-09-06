@@ -1,4 +1,4 @@
-import { ConversationType } from "../enums/conversation-type";
+import { ConversationType } from "../enums/conversation-type.enum";
 
 export interface ConversationMember {
   userId: string;

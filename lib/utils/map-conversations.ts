@@ -1,4 +1,4 @@
-import { ConversationType } from "../enums/conversation-type";
+import { ConversationType } from "../enums/conversation-type.enum";
 import { Conversation } from "../types/conversation";
 import { ConversationSummaryResponse } from "../types/conversation-summary.response";
 import { ConversationResponse } from "../types/conversation.response";

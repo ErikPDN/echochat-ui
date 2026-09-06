@@ -3,8 +3,9 @@
 import { Message } from "@/lib/types/message";
 import { MessageListSkeleton } from "./MessageListSkeleton";
 import { MessageListItem } from "./MessageListItem";
-import { ConversationType } from "@/lib/enums/conversation-type";
+import { ConversationType } from "@/lib/enums/conversation-type.enum";
 import { stringToColor } from "@/lib/utils/string-to-color";
+import { MessageStatus } from "@/lib/enums/message-status.enum";
 
 interface MessageListProps {
   isMessageListLoading?: boolean;
@@ -12,14 +13,13 @@ interface MessageListProps {
   conversationType?: ConversationType;
 }
 
-// TODO: melhorar barra de scroll e criar skeleton para mensagens
 export const MessageList = ({
   conversationType,
   isMessageListLoading,
   messages,
 }: MessageListProps) => {
   return (
-    <div className="flex-1 overflow-auto p-4">
+    <div className="flex-1 overflow-auto p-4 scrollbar-thin">
       {isMessageListLoading ? (
         <MessageListSkeleton />
       ) : messages && messages.length === 0 ? (
@@ -29,9 +29,10 @@ export const MessageList = ({
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-1.5 scrollbar-thin">
+        <ul className="flex flex-col gap-1.5 ">
           {messages?.map((message, index) => {
             const userNameColor = stringToColor(message.senderId);
+            const messageStatus = MessageStatus.SENT; // TODO: Implement message status logic
 
             return (
               <li key={message.messageId}>
@@ -47,6 +48,7 @@ export const MessageList = ({
                   contentType={message.contentType}
                   fileIds={message.fileIds}
                   createdAt={message.createdAt}
+                  messageStatus={messageStatus}
                   previousCreatedAt={
                     index > 0 ? messages[index - 1].createdAt : undefined
                   }

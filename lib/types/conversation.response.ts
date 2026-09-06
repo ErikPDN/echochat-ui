@@ -1,4 +1,4 @@
-import { ConversationType } from "../enums/conversation-type";
+import { ConversationType } from "../enums/conversation-type.enum";
 import { ConversationMemberResponse } from "./conversation-member-response";
 
 export interface ConversationResponse {

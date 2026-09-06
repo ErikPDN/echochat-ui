@@ -18,7 +18,7 @@ import { SlidePanel } from "../ui/SlidePanel";
 import { Conversation } from "@/lib/types/conversation";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ProfilePanel } from "../chat/profile/ProfilePanel";
-import { ConversationType } from "@/lib/enums/conversation-type";
+import { ConversationType } from "@/lib/enums/conversation-type.enum";
 import { useGetMessagesSummaryQuery } from "@/lib/hooks/chat/useGetMessagesSummaryQuery";
 import { ConversationSummaryResponse } from "@/lib/types/conversation-summary.response";
 import { useReadMessageMutation } from "@/lib/hooks/chat/useReadMessageMutation";

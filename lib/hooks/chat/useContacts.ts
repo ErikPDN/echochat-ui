@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/lib/store/auth-store";
 import { useGetConversationsQuery } from "./useGetConversationsQuery";
 import { stringToColor } from "@/lib/utils/string-to-color";
-import { ConversationType } from "@/lib/enums/conversation-type";
+import { ConversationType } from "@/lib/enums/conversation-type.enum";
 
 export interface Contact {
   userId: string;
