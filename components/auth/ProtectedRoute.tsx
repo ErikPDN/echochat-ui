@@ -1,5 +1,6 @@
 "use client";
 
+import { useSocket } from "@/lib/hooks/ws";
 import { useAuthStore } from "@/lib/store/auth-store";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -8,6 +9,8 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const isHydrating = useAuthStore((state) => state.isHydrating);
+
+  useSocket();
 
   useEffect(() => {
     if (!isHydrating && !user) {
