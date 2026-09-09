@@ -1,6 +1,6 @@
 "use client";
 
-import { useSocket } from "@/lib/hooks/ws";
+import { useConversationsListener, useSocket } from "@/lib/hooks/ws";
 import { useAuthStore } from "@/lib/store/auth-store";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -11,6 +11,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const isHydrating = useAuthStore((state) => state.isHydrating);
 
   useSocket();
+  useConversationsListener();
 
   useEffect(() => {
     if (!isHydrating && !user) {
