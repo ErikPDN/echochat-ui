@@ -4,6 +4,5 @@ export * from "@/lib/hooks/chat/useAddMemberToConversationMutation";
 export * from "@/lib/hooks/chat/useGetConversationsQuery";
 export * from "@/lib/hooks/chat/useContacts";
 export * from "@/lib/hooks/chat/useGetMessagesQuery";
-export * from "@/lib/hooks/chat/useSendMessageMutation";
 export * from "@/lib/hooks/chat/useGetMessagesSummaryQuery";
 export * from "@/lib/hooks/chat/useReadMessageMutation";

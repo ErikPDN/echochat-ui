@@ -10,6 +10,7 @@ import { MessageComposer } from "./MessageComposer";
 import { useGetMessagesSummaryQuery } from "@/lib/hooks/chat/useGetMessagesSummaryQuery";
 import { useReadMessageMutation } from "@/lib/hooks/chat/useReadMessageMutation";
 import { useEffect } from "react";
+import { useConversationRoom } from "@/lib/hooks/ws";
 
 interface ChatConversationViewProps {
   conversationId: string;
@@ -29,6 +30,7 @@ export const ChatConversationView = ({
     conversations?.map((conversation) => conversation.id) ?? [],
   );
   const { mutate: markMessagesAsRead } = useReadMessageMutation();
+  useConversationRoom(conversationId);
 
   const conversationResponse = conversations?.find(
     (conversation) => conversation.id === conversationId,

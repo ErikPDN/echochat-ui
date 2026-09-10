@@ -1,7 +1,7 @@
 "use client";
 
 import { ContentType } from "@/lib/enums/content-type.enum";
-import { useSendMessageMutation } from "@/lib/hooks/chat/useSendMessageMutation";
+import { useSendMessage } from "@/lib/hooks/ws";
 import { Paperclip, Send } from "lucide-react";
 import { useState } from "react";
 import { KeyboardEvent } from "react";
@@ -12,8 +12,7 @@ interface MessageComposerProps {
 
 export const MessageComposer = ({ conversationId }: MessageComposerProps) => {
   const [message, setMessage] = useState("");
-  const { mutate: sendMessage, isPending } =
-    useSendMessageMutation(conversationId);
+  const { sendMessage } = useSendMessage();
 
   const handleSendMessage = () => {
     const content = message.trim();
