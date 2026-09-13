@@ -6,6 +6,8 @@ import { MessageListItem } from "./MessageListItem";
 import { ConversationType } from "@/lib/enums/conversation-type.enum";
 import { stringToColor } from "@/lib/utils/string-to-color";
 import { MessageStatus } from "@/lib/enums/message-status.enum";
+import { useEffect, useRef } from "react";
+import { useAuthStore } from "@/lib/store/auth-store";
 
 interface MessageListProps {
   isMessageListLoading?: boolean;
@@ -18,8 +20,30 @@ export const MessageList = ({
   isMessageListLoading,
   messages,
 }: MessageListProps) => {
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const isNearBottomRef = useRef<boolean>(true);
+  const currentUserId = useAuthStore((state) => state.user?.id);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    isNearBottomRef.current =
+      el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+  };
+
+  useEffect(() => {
+    const lastMessage = messages?.at(-1);
+    const isOwnMessage = lastMessage?.senderId === currentUserId;
+
+    if (isOwnMessage || isNearBottomRef.current) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages?.at(-1)?.messageId]);
+
   return (
-    <div className="flex-1 overflow-auto p-4 scrollbar-thin">
+    <div
+      className="flex-1 overflow-auto p-4 scrollbar-thin"
+      onScroll={handleScroll}
+    >
       {isMessageListLoading ? (
         <MessageListSkeleton />
       ) : messages && messages.length === 0 ? (
@@ -29,35 +53,38 @@ export const MessageList = ({
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-1.5 ">
-          {messages?.map((message, index) => {
-            const userNameColor = stringToColor(message.senderId);
-            const messageStatus = MessageStatus.SENT; // TODO: Implement message status logic
+        <>
+          <ul className="flex flex-col gap-1.5 ">
+            {messages?.map((message, index) => {
+              const userNameColor = stringToColor(message.senderId);
+              const messageStatus = MessageStatus.SENT; // TODO: Implement message status logic
 
-            return (
-              <li key={message.messageId}>
-                <MessageListItem
-                  conversationType={conversationType}
-                  messageIndex={index}
-                  messageId={message.messageId}
-                  senderId={message.senderId}
-                  senderColor={userNameColor}
-                  username={message.senderUsername}
-                  avatarUrl={message.senderAvatarUrl}
-                  content={message.content}
-                  contentType={message.contentType}
-                  fileIds={message.fileIds}
-                  createdAt={message.createdAt}
-                  messageStatus={messageStatus}
-                  previousCreatedAt={
-                    index > 0 ? messages[index - 1].createdAt : undefined
-                  }
-                  updatedAt={message.updatedAt}
-                />
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li key={message.messageId}>
+                  <MessageListItem
+                    conversationType={conversationType}
+                    messageIndex={index}
+                    messageId={message.messageId}
+                    senderId={message.senderId}
+                    senderColor={userNameColor}
+                    username={message.senderUsername}
+                    avatarUrl={message.senderAvatarUrl}
+                    content={message.content}
+                    contentType={message.contentType}
+                    fileIds={message.fileIds}
+                    createdAt={message.createdAt}
+                    messageStatus={messageStatus}
+                    previousCreatedAt={
+                      index > 0 ? messages[index - 1].createdAt : undefined
+                    }
+                    updatedAt={message.updatedAt}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+          <div ref={bottomRef} />
+        </>
       )}
     </div>
   );
